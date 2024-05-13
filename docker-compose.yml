@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  myinvestments.httpapi.host:
+    image: ${DOCKER_REGISTRY-}myinvestmentshttpapihost
+    build:
+      context: .
+      dockerfile: src/MyInvestments.HttpApi.Host/Dockerfile
+  
+  MyInvestments-postgre:
+    image: postgres
+    container_name: MyInvestments-postgre
+    restart: unless-stopped
+    # restart: always
+    #env_file: ./.env   #Arquivo com variaveis
+    ports:
+      - "5432:5432"
+    # - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    environment:
+      POSTGRES_DB: MyInvestments
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: myPassword
+      # - MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD
+      # - MYSQL_DATABASE=$MYSQL_DATABASE
+      # - MYSQL_TCP_PORT=$MYSQL_DOCKER_PORT
+    volumes:
+      - ./.postgres-data:/var/lib/postgresql/data
+    # - ./init.sql:/docker-entrypoint-initdb.d/init.sql   #Scrit para popular BD

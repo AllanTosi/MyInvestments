@@ -1,0 +1,205 @@
+﻿@page "/ativos"
+@using MyInvestments.Ativos
+@using MyInvestments.Localization
+@using Volo.Abp.AspNetCore.Components.Web
+@inherits MyInvestmentsComponentBase
+@inject IAtivoAppService AtivoAppService
+@inject AbpBlazorMessageLocalizerHelper<MyInvestmentsResource> LH
+
+<Card>
+    <CardHeader>
+        <Row Class="justify-content-between">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h2>@L["Ativos"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsAuto">
+                @if (CanCreateAtivo)
+                {
+                    <Button Color="Color.Primary"
+                            Clicked="OpenCreateAtivoModal">
+                        @L["NewAtivo"]
+                    </Button>
+                }
+            </Column>
+        </Row>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="AtivoDto"
+                  Data="AtivoList"
+                  ReadData="OnDataGridReadAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridColumn Width="150px"
+                                TItem="AtivoDto"
+                                Field="@nameof(AtivoDto.Id)"
+                                Sortable="false"
+                                Caption="@L["Actions"]">
+                    <DisplayTemplate>
+                        <Dropdown>
+                            <DropdownToggle Color="Color.Primary">
+                                @L["Actions"]
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                @if (CanEditAtivo)
+                                {
+                                    <DropdownItem Clicked="() => OpenEditAtivoModal(context)">
+                                        @L["Edit"]
+                                    </DropdownItem>
+                                }
+                                @if (CanDeleteAtivo)
+                                {
+                                    <DropdownItem Clicked="() => DeleteAtivoAsync(context)">
+                                        @L["Delete"]
+                                    </DropdownItem>
+                                }
+                            </DropdownMenu>
+                        </Dropdown>
+                    </DisplayTemplate>
+                </DataGridColumn>
+
+                <DataGridColumn TItem="AtivoDto"
+                                Field="@nameof(AtivoDto.Ticker)"
+                                Caption="Ticker">
+                </DataGridColumn>
+
+                <DataGridColumn TItem="AtivoDto"
+                                Field="@nameof(AtivoDto.Nome)"
+                                Caption="Name">
+                </DataGridColumn>
+
+                <DataGridColumn TItem="AtivoDto"
+                                Field="@nameof(AtivoDto.Descricao)"
+                                Caption="DescriptionAsset">
+                </DataGridColumn>
+
+
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+
+<Modal @ref="CreateAtivoModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["NewAtivo"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateAtivoModal" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewAtivo" ValidateOnLoad="false">
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Ticker"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewAtivo.Ticker">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Nome"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewAtivo.Nome">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Descricao"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewAtivo.Descricao">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseCreateAtivoModal">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="CreateAtivoAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="EditAtivoModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingAtivo.Descricao</ModalTitle>
+                <CloseButton Clicked="CloseEditAtivoModal" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditValidationsRef" Model="@EditingAtivo" ValidateOnLoad="false">
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Ticker"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingAtivo.Ticker">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Nome"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingAtivo.Nome">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Descricao"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingAtivo.Descricao">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditAtivoModal">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateAtivoAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>

@@ -1,0 +1,90 @@
+{
+  "culture": "en",
+  "texts": {
+    "Menu:Home": "Home",
+    "Welcome": "Welcome",
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+
+    "Actions": "Actions",
+    "Close": "Close",
+    "Delete": "Delete",
+    "Edit": "Edit",
+    "PublishDate": "Publish date",
+    "CreationTime": "Creation time",
+
+    "Menu:MyInvestments": "My Investments",
+
+    "Menu:Ativos": "Assets",
+    "NewAtivo": "New Asset",
+    //Tela Ativos
+    "Ticker": "Ticker",
+    "DescriptionAsset": "Description",
+
+    "Menu:ClasseAtivos": "Asset Classes",
+    "NewClasseAtivo": "New Asset Class",
+
+    "Menu:Operacoes": "Operations",
+    "NewOperacao": "New Operation",
+    //Tela Operações
+    "OperationDate": "Operation Date",
+    "Quantity": "Quantity",
+    "Price": "Price",
+    "EmolumentValue": "Emolument Value",
+    "IRPFValue": "IRPF Value",
+    "BrokerageValue": "Brokerage Value",
+
+    "Menu:Setores": "Sectors",
+    "NewSetor": "New Sector",
+
+    "Menu:TipoTransacoes": "Transaction Types",
+    "NewTipoTransacao": "New Transaction Type",
+
+    //CRUD
+    //Telas ClasseAtivo, Setor e Ativos
+    "Description": "Description",
+    "Name": "Name",
+
+    "successMessage": "Your changes have been successfully saved!",
+    "AddSuccessMessage": "Item added successfully.",
+    "UpdateSuccessMessage": "Item updated successfully.",
+
+    "AreYouSure": "Are you sure?",
+    "AreYouSureToDelete": "Are you sure you want to delete this item?",
+
+
+
+    //Erro msg
+    "MyInvestments:00001": "There is already an ativo with the same ticker: {ticker}",
+    "MyInvestments:00002": "There is already an classe de ativo with the same name: {nome}",
+    "MyInvestments:00003": "There is already an setor with the same descrição: {descricao}",
+    "MyInvestments:00004": "There is already an tipo transação with the same descrição: {descricao}",
+    "MyInvestments:00005": "There is already an operação with the same operação: {operacao}",
+
+    //Permission menus
+    "Permission:MyInvestments": "My Investments",
+    "Permission:Ativos": "Ativos Management",
+    "Permission:Ativos.Create": "Creating new Ativo",
+    "Permission:Ativos.Edit": "Editing the Ativo",
+    "Permission:Ativos.Delete": "Deleting the Ativo",
+
+    "Permission:ClasseAtivos": "Classe Ativos Management",
+    "Permission:ClasseAtivos.Create": "Creating new Classe Ativo",
+    "Permission:ClasseAtivos.Edit": "Editing the Classe Ativo",
+    "Permission:ClasseAtivos.Delete": "Deleting the Classe Ativo",
+
+    "Permission:Operacoes": "Operações Management",
+    "Permission:Operacoes.Create": "Creating new Operação",
+    "Permission:Operacoes.Edit": "Editing the Operação",
+    "Permission:Operacoes.Delete": "Deleting the Operação",
+
+    "Permission:Setores": "Setores Management",
+    "Permission:Setores.Create": "Creating new Setor",
+    "Permission:Setores.Edit": "Editing the Setor",
+    "Permission:Setores.Delete": "Deleting the Setor",
+
+    "Permission:TipoTransacoes": "Transação Management",
+    "Permission:TipoTransacoes.Create": "Creating new Transação",
+    "Permission:TipoTransacoes.Edit": "Editing the Transação",
+    "Permission:TipoTransacoes.Delete": "Deleting the Transação"
+  }
+}

@@ -1,0 +1,292 @@
+﻿@page "/operacoes"
+@using MyInvestments.Operacoes
+@using MyInvestments.Localization
+@using Volo.Abp.AspNetCore.Components.Web
+@inherits MyInvestmentsComponentBase
+@inject IOperacaoAppService OperacaoAppService
+@inject AbpBlazorMessageLocalizerHelper<MyInvestmentsResource> LH
+
+<Card>
+    <CardHeader>
+        <Row Class="justify-content-between">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h2>@L["Operacoes"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsAuto">
+                @if (CanCreateOperacao)
+                {
+                    <Button Color="Color.Primary"
+                            Clicked="OpenCreateOperacaoModal">
+                        @L["NewOperacao"]
+                    </Button>
+                }
+            </Column>
+        </Row>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="OperacaoDto"
+                  Data="OperacaoList"
+                  ReadData="OnDataGridReadAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridColumn Width="150px"
+                                TItem="OperacaoDto"
+                                Field="@nameof(OperacaoDto.Id)"
+                                Sortable="false"
+                                Caption="@L["Actions"]">
+                    <DisplayTemplate>
+                        <Dropdown>
+                            <DropdownToggle Color="Color.Primary">
+                                @L["Actions"]
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                @if (CanEditOperacao)
+                                {
+                                    <DropdownItem Clicked="() => OpenEditOperacaoModal(context)">
+                                        @L["Edit"]
+                                    </DropdownItem>
+                                }
+                                @if (CanDeleteOperacao)
+                                {
+                                    <DropdownItem Clicked="() => DeleteOperacaoAsync(context)">
+                                        @L["Delete"]
+                                    </DropdownItem>
+                                }
+                            </DropdownMenu>
+                        </Dropdown>
+                    </DisplayTemplate>
+                </DataGridColumn>
+
+                <DataGridColumn TItem="OperacaoDto"
+                                Field="@nameof(OperacaoDto.DataOperacao)"
+                                Caption="@L["OperationDate"]">
+                    <DisplayTemplate>
+                        @context.DataOperacao.ToShortDateString()
+                    </DisplayTemplate>
+                </DataGridColumn>
+
+                <DataGridColumn TItem="OperacaoDto"
+                                Field="@nameof(OperacaoDto.Quantidade)"
+                                Caption="@L["Quantity"]">
+                </DataGridColumn>
+
+                <DataGridColumn TItem="OperacaoDto"
+                                Field="@nameof(OperacaoDto.Preco)"
+                                Caption="@L["Price"]">
+                </DataGridColumn>
+
+                <DataGridColumn TItem="OperacaoDto"
+                                Field="@nameof(OperacaoDto.ValorEmulumento)"
+                                Caption="@L["EmolumentValue"]">
+                </DataGridColumn>
+
+                <DataGridColumn TItem="OperacaoDto"
+                                Field="@nameof(OperacaoDto.ValorIrpf)"
+                                Caption="@L["IRPFValue"]">
+                </DataGridColumn>
+
+                <DataGridColumn TItem="OperacaoDto"
+                                Field="@nameof(OperacaoDto.ValorCorretagem)"
+                                Caption="@L["BrokerageValue"]">
+                </DataGridColumn>
+
+
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+ 
+<Modal @ref="CreateOperacaoModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["NewOperacao"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateOperacaoModal" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewOperacao" ValidateOnLoad="false">
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["OperationDate"]</FieldLabel>
+                            <DateEdit TValue="DateTime" @bind-Date="@NewOperacao.DataOperacao">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </DateEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Quantity"]</FieldLabel>
+                            <NumericEdit TValue="int" @bind-Value="@NewOperacao.Quantidade" Type="number">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Price"]</FieldLabel>
+                            <NumericEdit TValue="float" @bind-Value="@NewOperacao.Preco" Type="number" >
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["EmolumentValue"]</FieldLabel>
+                            <NumericEdit TValue="float" @bind-Value="@NewOperacao.ValorEmulumento" Type="number">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["IRPFValue"]</FieldLabel>
+                            <NumericEdit TValue="float" @bind-Value="@NewOperacao.ValorIrpf" Type="number">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+        @*             <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["BrokerageValue"]</FieldLabel>
+                            <NumericEdit TValue?="float" @bind-Value="@NewOperacao.ValorCorretagem" Type="number" >
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit> 
+                        </Field>
+                    </Validation> *@
+
+
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseCreateOperacaoModal">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="CreateOperacaoAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="EditOperacaoModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingOperacao.DataOperacao</ModalTitle>
+                <CloseButton Clicked="CloseEditOperacaoModal" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditValidationsRef" Model="@EditingOperacao" ValidateOnLoad="false">
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["OperationDate"]</FieldLabel>
+                            <DateEdit TValue="DateTime" @bind-Date="@EditingOperacao.DataOperacao">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </DateEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Quantity"]</FieldLabel>
+                            <NumericEdit TValue="int" @bind-Value="@EditingOperacao.Quantidade" Type="number">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Price"]</FieldLabel>
+                            <NumericEdit TValue="float" @bind-Value="@EditingOperacao.Preco" Type="number">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["EmolumentValue"]</FieldLabel>
+                            <NumericEdit TValue="float" @bind-Value="@EditingOperacao.ValorEmulumento" Type="number">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["IRPFValue"]</FieldLabel>
+                            <NumericEdit TValue="float" @bind-Value="@EditingOperacao.ValorIrpf" Type="number">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+        @*             <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["BrokerageValue"]</FieldLabel>
+                    <NumericEdit TValue?="float" @bind-Value="@EditingOperacao.ValorCorretagem" Type="number" >
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit> 
+                        </Field>
+                    </Validation> *@
+
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditOperacaoModal">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateOperacaoAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal> 
+
+ 

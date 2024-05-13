@@ -263,3 +263,6 @@ src/MyInvestments.Blazor.Server.Tiered/Logs/*
 
 # Use abp install-libs to restore.
 **/wwwroot/libs/*
+
+# Postgre Dados
+/.postgres-data

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -10,6 +11,8 @@ public interface IOperacaoAppService : IApplicationService
     Task<OperacaoDto> GetAsync(Guid id);
 
     Task<PagedResultDto<OperacaoDto>> GetListAsync(GetOperacaoListDto input);
+
+    Task<List<OperacaoDto>> GetListByDataAsync(DateTime dataOperacao);
 
     Task<OperacaoDto> CreateAsync(CreateOperacaoDto input);
 

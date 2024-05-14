@@ -38,6 +38,9 @@ public partial class ClasseAtivos
 
     private Validations EditValidationsRef;
 
+    private Validations validationsRef;
+    private String SearchClasseAtivo { get; set; }
+
     public ClasseAtivos()
     {
         NewClasseAtivo = new CreateClasseAtivoDto();
@@ -151,5 +154,17 @@ public partial class ClasseAtivos
             await Message.Success(updateSuccessMessage);
             await EditClasseAtivoModal.Hide();
         }
+    }
+
+    private async Task Search()
+    {
+        if (await validationsRef.ValidateAll())
+        {
+            var result = await ClasseAtivoAppService.GetListByNameAsync(SearchClasseAtivo);
+            ClasseAtivoList = result;
+            TotalCount = (int)result.Count;
+        }
+
+        GetClasseAtivosAsync();
     }
 }

@@ -9,6 +9,7 @@ using Blazorise.DataGrid;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Components.Web.LeptonXLiteTheme.Themes.LeptonXLite;
+using System.Diagnostics;
 
 namespace MyInvestments.Blazor.Pages;
 
@@ -36,6 +37,9 @@ public partial class Setores
     private Validations CreateValidationsRef;
 
     private Validations EditValidationsRef;
+
+    private Validations validationsRef;
+    private String SearchSetor { get; set; }
 
     public Setores()
     {
@@ -150,5 +154,17 @@ public partial class Setores
             await Message.Success(updateSuccessMessage);
             await EditSetorModal.Hide();
         }
+    }
+    
+    private async Task Search()
+    {
+        if (await validationsRef.ValidateAll())
+        {
+            var result = await SetorAppService.GetListByDescricaoAsync(SearchSetor);
+            SetorList = result;
+            TotalCount = (int)result.Count;
+        }
+
+        GetSetoresAsync();
     }
 }

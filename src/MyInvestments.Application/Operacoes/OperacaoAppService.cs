@@ -93,4 +93,9 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
         await _operacaoRepository.DeleteAsync(id);
     }
 
+    public async Task<List<OperacaoDto>> GetListByDataAsync(DateTime dataOperacao)
+    {
+        var operacoes = await _operacaoRepository.GetListByDataAsync(dataOperacao);
+        return ObjectMapper.Map<List<Operacao>, List<OperacaoDto>>(operacoes);
+    }
 }

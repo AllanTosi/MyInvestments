@@ -9,6 +9,7 @@ using Volo.Abp.Domain.Repositories;
 using MyInvestments.ClasseAtivos;
 using MyInvestments.Setores;
 using Volo.Abp.ObjectMapping;
+using AutoMapper.Internal.Mappers;
 
 namespace MyInvestments.Ativos;
 
@@ -118,6 +119,13 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         await _ativoRepository.DeleteAsync(id);
     }
 
+    //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
+    public async Task<List<AtivoDto>> GetListByTickerAsync(string ticker)
+    {
+        var ativos = await _ativoRepository.GetListByTickerAsync(ticker);
+        return ObjectMapper.Map<List<Ativo>, List<AtivoDto>>(ativos);
+    }
+
                 //Adiciona Relacionamento
                 public async Task<ListResultDto<ClasseAtivoLookupDto>> GetClasseAtivoLookupAsync()
                 {
@@ -136,4 +144,5 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
                         ObjectMapper.Map<List<Setor>, List<SetorLookupDto>>(setores)
                     );
                 }
+
 }

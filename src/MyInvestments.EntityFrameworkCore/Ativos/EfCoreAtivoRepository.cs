@@ -7,6 +7,7 @@ using MyInvestments.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using MyInvestments.Setores;
 
 namespace MyInvestments.Ativos;
 
@@ -46,6 +47,16 @@ public class EfCoreAtivoRepository
             .OrderBy(sorting)
             .Skip(skipCount)
             .Take(maxResultCount)
+            .ToListAsync();
+    }
+
+    public async Task<List<Ativo>> GetListByTickerAsync(string ticker)
+    {
+        var dbSet = await GetDbSetAsync();
+        return await dbSet
+            .Where(
+                ativo => ativo.Ticker.ToLower().Contains(ticker)
+                )
             .ToListAsync();
     }
 }

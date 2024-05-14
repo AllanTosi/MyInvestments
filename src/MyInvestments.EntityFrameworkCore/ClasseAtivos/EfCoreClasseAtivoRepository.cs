@@ -43,4 +43,14 @@ public class EfCoreClasseAtivoRepository
             .Take(maxResultCount)
             .ToListAsync();
     }
+
+    public async Task<List<ClasseAtivo>> GetListByNameAsync(string name)
+    {
+        var dbSet = await GetDbSetAsync();
+        return await dbSet
+            .Where(
+                classeAtivo => classeAtivo.Nome.ToLower().Contains(name)
+                )
+            .ToListAsync();
+    }
 }

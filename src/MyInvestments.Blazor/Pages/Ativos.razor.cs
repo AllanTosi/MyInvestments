@@ -37,6 +37,9 @@ public partial class Ativos
 
     private Validations EditValidationsRef;
 
+    private Validations validationsRef;
+    private String SearchAtivo { get; set; }
+
     public Ativos()
     {
         NewAtivo = new CreateAtivoDto();
@@ -150,5 +153,17 @@ public partial class Ativos
             await Message.Success(updateSuccessMessage);
             await EditAtivoModal.Hide();
         }
+    }
+
+    private async Task Search()
+    {
+        if (await validationsRef.ValidateAll())
+        {
+            var result = await AtivoAppService.GetListByTickerAsync(SearchAtivo);
+            AtivoList = result;
+            TotalCount = (int)result.Count;
+        }
+
+        GetAtivosAsync();
     }
 }

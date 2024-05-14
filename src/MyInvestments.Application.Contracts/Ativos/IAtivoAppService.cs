@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -10,6 +11,8 @@ public interface IAtivoAppService : IApplicationService
     Task<AtivoDto> GetAsync(Guid id);
 
     Task<PagedResultDto<AtivoDto>> GetListAsync(GetAtivoListDto input);
+    
+    Task<List<AtivoDto>> GetListByTickerAsync(string ticker);
 
     Task<AtivoDto> CreateAsync(CreateAtivoDto input);
 

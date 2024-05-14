@@ -22,6 +22,20 @@
                 }
             </Column>
         </Row>
+        <Row Class="justify-content-between">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <Validations @ref="validationsRef" Mode="ValidationMode.Manual">
+                    <Validation Validator="@ValidationRule.IsNotEmpty">
+                        <Field>
+                            <TextEdit @bind-Text="@SearchClasseAtivo" Placeholder=@L["SearchClasseAtivo"] />
+                        </Field>
+                    </Validation>
+                </Validations>
+            </Column>
+            <Column>
+                <Button Color="Color.Primary" Clicked="@Search">@L["Search"]</Button>
+            </Column>
+        </Row>
     </CardHeader>
     <CardBody>
         <DataGrid TItem="ClasseAtivoDto"

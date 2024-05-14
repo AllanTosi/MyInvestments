@@ -86,4 +86,10 @@ public class TipoTransacaoAppService : MyInvestmentsAppService, ITipoTransacaoAp
         await _tipoTransacaoRepository.DeleteAsync(id);
     }
 
+    //[Authorize(MyInvestmentsPermissions.TipoTransacoes.Default)]
+    public async Task<List<TipoTransacaoDto>> GetListByDescricaoAsync(string descricao)
+    {
+        var tipoTransacoes = await _tipoTransacaoRepository.GetListByDescricaoAsync(descricao);
+        return ObjectMapper.Map<List<TipoTransacao>, List<TipoTransacaoDto>>(tipoTransacoes);
+    }
 }

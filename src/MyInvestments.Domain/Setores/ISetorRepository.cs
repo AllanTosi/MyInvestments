@@ -8,6 +8,7 @@ namespace MyInvestments.Setores;
 public interface ISetorRepository : IRepository<Setor, Guid>
 {
     Task<Setor> FindByDescricaoAsync(string descricao);
+    Task<List<Setor>> GetListByDescricaoAsync(string descricao);
 
     Task<List<Setor>> GetListAsync(
         int skipCount,

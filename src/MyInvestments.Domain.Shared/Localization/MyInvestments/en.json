@@ -16,16 +16,20 @@
 
     "Menu:Ativos": "Assets",
     "NewAtivo": "New Asset",
-    //Tela Ativos
+    "SearchTicker": "Search by Ticker",
+    "Ativos": "Assets",
     "Ticker": "Ticker",
     "DescriptionAsset": "Description",
 
     "Menu:ClasseAtivos": "Asset Classes",
     "NewClasseAtivo": "New Asset Class",
+    "ClasseAtivos": "Asset Classes",
+    "SearchClasseAtivo": "Search Asset Classes",
 
     "Menu:Operacoes": "Operations",
     "NewOperacao": "New Operation",
-    //Tela Operações
+    "Operacoes": "Operations",
+    "SearchOperacao": "Search Operations by Date",
     "OperationDate": "Operation Date",
     "Quantity": "Quantity",
     "Price": "Price",
@@ -35,14 +39,19 @@
 
     "Menu:Setores": "Sectors",
     "NewSetor": "New Sector",
+    "Setores": "Sectors",
+    "SearchSetor": "Search Setor",
 
     "Menu:TipoTransacoes": "Transaction Types",
     "NewTipoTransacao": "New Transaction Type",
+    "TipoTransacoes": "Transaction Type",
+    "SearchTipoTransacao": "Search Transaction Type",
 
     //CRUD
-    //Telas ClasseAtivo, Setor e Ativos
+    //Label comuns nas telas ClasseAtivo, Setor e Ativos
     "Description": "Description",
     "Name": "Name",
+    "Search": "Search",
 
     "successMessage": "Your changes have been successfully saved!",
     "AddSuccessMessage": "Item added successfully.",

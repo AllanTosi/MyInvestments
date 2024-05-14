@@ -86,4 +86,10 @@ public class SetorAppService : MyInvestmentsAppService, ISetorAppService
         await _setorRepository.DeleteAsync(id);
     }
 
+    //[Authorize(MyInvestmentsPermissions.Setores.Default)]
+    public async Task<List<SetorDto>> GetListByDescricaoAsync(string descricao)
+    {
+        var setores = await _setorRepository.GetListByDescricaoAsync(descricao);
+        return ObjectMapper.Map<List<Setor>, List < SetorDto >> (setores);
+    }
 }

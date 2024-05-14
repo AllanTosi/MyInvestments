@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
@@ -41,6 +42,16 @@ public class EfCoreSetorRepository
             .OrderBy(sorting)
             .Skip(skipCount)
             .Take(maxResultCount)
+            .ToListAsync();
+    }
+
+    public async Task<List<Setor>> GetListByDescricaoAsync(string descricao)
+    {
+        var dbSet = await GetDbSetAsync();
+        return await dbSet
+            .Where(
+                setor => setor.Descricao.ToLower().Contains(descricao)
+                )
             .ToListAsync();
     }
 }

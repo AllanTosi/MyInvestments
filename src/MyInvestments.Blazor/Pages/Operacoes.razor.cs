@@ -38,6 +38,9 @@ public partial class Operacoes
 
     private Validations EditValidationsRef;
 
+    private Validations validationsRef;
+    private DateTime SearchOperacao { get; set; }
+
     public Operacoes()
     {
         NewOperacao = new CreateOperacaoDto();
@@ -151,5 +154,17 @@ public partial class Operacoes
             await Message.Success(updateSuccessMessage);
             await EditOperacaoModal.Hide();
         }
+    }
+
+    private async Task Search()
+    {
+        if (await validationsRef.ValidateAll())
+        {
+            var result = await OperacaoAppService.GetListByDataAsync(SearchOperacao);
+            OperacaoList = result;
+            TotalCount = (int)result.Count;
+        }
+
+        //GetOperacoesAsync();
     }
 }

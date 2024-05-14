@@ -86,4 +86,9 @@ public class ClasseAtivoAppService : MyInvestmentsAppService, IClasseAtivoAppSer
         await _classeAtivoRepository.DeleteAsync(id);
     }
 
+    public async Task<List<ClasseAtivoDto>> GetListByNameAsync(string name)
+    {
+        var classeAtivos = await _classeAtivoRepository.GetListByNameAsync(name);
+        return ObjectMapper.Map<List<ClasseAtivo>, List<ClasseAtivoDto>>(classeAtivos);
+    }
 }

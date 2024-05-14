@@ -46,4 +46,15 @@ public class EfCoreOperacaoRepository
             .Take(maxResultCount)
             .ToListAsync();
     }
+
+    public async Task<List<Operacao>> GetListByDataAsync(DateTime dataOperacao)
+    {
+        var dbSet = await GetDbSetAsync();
+        return await dbSet
+            /*.Where(
+                operacao => operacao.DataOperacao.Equals( dataOperacao)
+                )*/
+            .Where(operacao => operacao.DataOperacao.Date.Equals(dataOperacao))
+            .ToListAsync();
+    }
 }

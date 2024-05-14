@@ -43,4 +43,14 @@ public class EfCoreTipoTransacaoRepository
             .Take(maxResultCount)
             .ToListAsync();
     }
+
+    public async Task<List<TipoTransacao>> GetListByDescricaoAsync(string descricao)
+    {
+        var dbSet = await GetDbSetAsync();
+        return await dbSet
+            .Where(
+                tipoTransacao => tipoTransacao.Descricao.ToLower().Contains(descricao)
+                )
+            .ToListAsync();
+    }
 }

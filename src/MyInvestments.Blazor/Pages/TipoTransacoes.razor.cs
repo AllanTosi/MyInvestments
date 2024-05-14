@@ -37,6 +37,10 @@ public partial class TipoTransacoes
 
     private Validations EditValidationsRef;
 
+    private Validations validationsRef;
+    private String SearchTipoTransacao { get; set; }
+
+
     public TipoTransacoes()
     {
         NewTipoTransacao = new CreateTipoTransacaoDto();
@@ -150,5 +154,16 @@ public partial class TipoTransacoes
             await Message.Success(updateSuccessMessage);
             await EditTipoTransacaoModal.Hide();
         }
+    }
+    private async Task Search()
+    {
+        if (await validationsRef.ValidateAll())
+        {
+            var result = await TipoTransacaoAppService.GetListByDescricaoAsync(SearchTipoTransacao);
+            TipoTransacaoList = result;
+            TotalCount = (int)result.Count;
+        }
+
+        GetTipoTransacoesAsync();
     }
 }

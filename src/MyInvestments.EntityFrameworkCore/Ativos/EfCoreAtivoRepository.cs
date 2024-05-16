@@ -65,11 +65,12 @@ public class EfCoreAtivoRepository
             .ToListAsync();
     }
 
-    public async Task<List<Ativo>> GetListAllAtivoAsync()
+    public async Task<List<Ativo>> GetListWithRelationshipAsync()
     {
         var dbSet = await GetDbSetAsync();
         return await dbSet
-            //.Where(ativo => ativo.Ticker.ToLower().Contains(ticker.ToLower()))
+            .Include(a => a.Setor)
+            .Include(b => b.ClasseAtivo)
             .ToListAsync();
     }
 }

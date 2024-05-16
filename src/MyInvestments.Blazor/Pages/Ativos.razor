@@ -93,13 +93,17 @@
                 </DataGridColumn>
 
                 <DataGridColumn TItem="AtivoDto"
-                                Field="@nameof(AtivoDto.Setor.Descricao)"
                                 Caption="SetorDescricao">
+                                <DisplayTemplate>
+                                    @context.Setor.Descricao
+                                </DisplayTemplate>
                 </DataGridColumn>
 
                 <DataGridColumn TItem="AtivoDto"
-                                Field="@nameof(AtivoDto.ClasseAtivo.Nome)"
                                 Caption="ClasseNome">
+                                <DisplayTemplate>
+                                    @context.ClasseAtivo.Nome
+                                </DisplayTemplate>
                 </DataGridColumn>
 
             </DataGridColumns>

@@ -63,19 +63,19 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
             : await _ativoRepository.CountAsync(
                 ativo => ativo.Ticker.Contains(input.Filter));
 
-        var l = new List<AtivoDto>();
+        var listAtivoDto = new List<AtivoDto>();
 
         foreach (var ativo in ativos)
         {
             var ativoDto = ObjectMapper.Map<Ativo, AtivoDto>(ativo);
             ativoDto.Setor = ObjectMapper.Map<Setor, SetorDto>(ativo.Setor);
             ativoDto.ClasseAtivo = ObjectMapper.Map<ClasseAtivo, ClasseAtivoDto>(ativo.ClasseAtivo);
-            l.Add( ativoDto );
+            listAtivoDto.Add( ativoDto );
         }
 
         return new PagedResultDto<AtivoDto>(
             totalCount,
-            l
+            listAtivoDto
 
         );
     }

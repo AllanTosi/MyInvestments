@@ -33,17 +33,24 @@ public class EfCoreAtivoRepository
         return await dbSet.FirstOrDefaultAsync(ativo => ativo.Nome == nome);
     }
     public async Task<List<Ativo>> GetListAsync(
-        int skipCount,
-        int maxResultCount,
-        string sorting,
-        string filter = null)
+       int skipCount,
+       int maxResultCount,
+       string sorting,
+       string filter = null)
     {
         var dbSet = await GetDbSetAsync();
-        return await dbSet
-            .WhereIf(
-                !filter.IsNullOrWhiteSpace(),
-                ativo => ativo.Ticker.Contains(filter)
-                )
+
+        var query = dbSet
+            .Include(a => a.Setor)
+            .Include(b => b.ClasseAtivo)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(filter))
+        {
+            query = query.Where(ativo => ativo.Ticker.ToLower().Contains(filter.ToLower()));
+        }
+
+        return await query
             .OrderBy(sorting)
             .Skip(skipCount)
             .Take(maxResultCount)
@@ -54,9 +61,15 @@ public class EfCoreAtivoRepository
     {
         var dbSet = await GetDbSetAsync();
         return await dbSet
-            .Where(
-                ativo => ativo.Ticker.ToLower().Contains(ticker)
-                )
+            .Where( ativo => ativo.Ticker.ToLower().Contains(ticker.ToLower()) )
+            .ToListAsync();
+    }
+
+    public async Task<List<Ativo>> GetListAllAtivoAsync()
+    {
+        var dbSet = await GetDbSetAsync();
+        return await dbSet
+            //.Where(ativo => ativo.Ticker.ToLower().Contains(ticker.ToLower()))
             .ToListAsync();
     }
 }

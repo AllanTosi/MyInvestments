@@ -1,10 +1,14 @@
 ﻿@page "/ativos"
 @using MyInvestments.Ativos
+@using MyInvestments.ClasseAtivos
 @using MyInvestments.Localization
+@using MyInvestments.Setores
 @using Volo.Abp.AspNetCore.Components.Web
 @inherits MyInvestmentsComponentBase
 @inject IAtivoAppService AtivoAppService
 @inject AbpBlazorMessageLocalizerHelper<MyInvestmentsResource> LH
+@inject ISetorAppService SetorAppService
+@inject IClasseAtivoAppService ClasseAtivoAppService
 
 <Card>
     <CardHeader>
@@ -88,6 +92,15 @@
                                 Caption="DescriptionAsset">
                 </DataGridColumn>
 
+                <DataGridColumn TItem="AtivoDto"
+                                Field="@nameof(AtivoDto.Setor.Descricao)"
+                                Caption="SetorDescricao">
+                </DataGridColumn>
+
+                <DataGridColumn TItem="AtivoDto"
+                                Field="@nameof(AtivoDto.ClasseAtivo.Nome)"
+                                Caption="ClasseNome">
+                </DataGridColumn>
 
             </DataGridColumns>
         </DataGrid>
@@ -137,6 +150,30 @@
                             </TextEdit>
                         </Field>
                     </Validation>
+
+                    <Field>
+                        <FieldLabel>@L["Setor"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@NewAtivo.SetorId">
+                            @foreach (var setor in setorList)
+                            {
+                                <SelectItem TValue="Guid" Value="@setor.Id">
+                                    @setor.Descricao
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
+
+                    <Field>
+                        <FieldLabel>@L["ClasseAtivo"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@NewAtivo.ClasseAtivoId">
+                            @foreach (var classeAtivo in classeAtivoList)
+                            {
+                                <SelectItem TValue="Guid" Value="@classeAtivo.Id">
+                                    @classeAtivo.Nome
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
 
                 </Validations>
             </ModalBody>
@@ -199,6 +236,30 @@
                             </TextEdit>
                         </Field>
                     </Validation>
+
+                    <Field>
+                        <FieldLabel>@L["Setor"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@EditingAtivo.SetorId">
+                            @foreach (var setor in setorList)
+                            {
+                                <SelectItem TValue="Guid" Value="@setor.Id">
+                                    @setor.Descricao
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
+
+                    <Field>
+                        <FieldLabel>@L["ClasseAtivo"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@EditingAtivo.ClasseAtivoId">
+                            @foreach (var classeAtivo in classeAtivoList)
+                            {
+                                <SelectItem TValue="Guid" Value="@classeAtivo.Id">
+                                    @classeAtivo.Nome
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
 
                 </Validations>
             </ModalBody>

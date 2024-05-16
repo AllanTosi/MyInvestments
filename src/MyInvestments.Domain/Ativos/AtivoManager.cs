@@ -18,10 +18,9 @@ public class AtivoManager : DomainService
     public async Task<Ativo> CreateAsync(
         string ticker,
         string nome,
+        Guid setorId,
+        Guid classeAtivoId,
         string? descricao = null
-        //,
-        //Guid classeAtivoId,
-        //Guid setorId
         )
     {
         Check.NotNullOrWhiteSpace(ticker, nameof(ticker));
@@ -38,10 +37,9 @@ public class AtivoManager : DomainService
             GuidGenerator.Create(),
             ticker,
             nome,
+            setorId,
+            classeAtivoId,
             descricao
-            //,
-            //classeAtivoId,
-            //setorId
         );
     }
 

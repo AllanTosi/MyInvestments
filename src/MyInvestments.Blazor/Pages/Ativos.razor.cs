@@ -9,13 +9,17 @@ using Blazorise.DataGrid;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Components.Web.LeptonXLiteTheme.Themes.LeptonXLite;
+using MyInvestments.Setores;
+using MyInvestments.ClasseAtivos;
+using Volo.Abp;
+using Volo.Abp.ObjectMapping;
 
 namespace MyInvestments.Blazor.Pages;
 
 public partial class Ativos
 {
     private IReadOnlyList<AtivoDto> AtivoList { get; set; }
-
+   
     private int PageSize { get; } = LimitedResultRequestDto.DefaultMaxResultCount;
     private int CurrentPage { get; set; }
     private string CurrentSorting { get; set; }
@@ -34,11 +38,14 @@ public partial class Ativos
     private Modal EditAtivoModal { get; set; }
 
     private Validations CreateValidationsRef;
-
     private Validations EditValidationsRef;
-
     private Validations validationsRef;
+
     private String SearchAtivo { get; set; }
+
+    IReadOnlyList<SetorLookupDto> setorList = Array.Empty<SetorLookupDto>();
+
+    IReadOnlyList<ClasseAtivoLookupDto> classeAtivoList = Array.Empty<ClasseAtivoLookupDto>();
 
     public Ativos()
     {
@@ -50,6 +57,8 @@ public partial class Ativos
     {
         await SetPermissionsAsync();
         await GetAtivosAsync();
+        setorList = (await AtivoAppService.GetSetorLookupAsync()).Items;
+        classeAtivoList = (await AtivoAppService.GetClasseAtivoLookupAsync()).Items;
     }
 
     private async Task SetPermissionsAsync()
@@ -94,10 +103,22 @@ public partial class Ativos
 
     private void OpenCreateAtivoModal()
     {
+        if (!setorList.Any())
+        {
+            throw new UserFriendlyException(message: L["AnSetorIsRequiredForCreatingAsset"]);
+        }
+
+        if (!classeAtivoList.Any())
+        {
+            throw new UserFriendlyException(message: L["AnClasseAtivoIsRequiredForCreatingAsset"]);
+        }
+
         CreateValidationsRef.ClearAll();
 
         NewAtivo = new CreateAtivoDto();
         CreateAtivoModal.Show();
+        NewAtivo.SetorId = setorList.First().Id;
+        NewAtivo.ClasseAtivoId = classeAtivoList.First().Id;
     }
 
     private void CloseCreateAtivoModal()

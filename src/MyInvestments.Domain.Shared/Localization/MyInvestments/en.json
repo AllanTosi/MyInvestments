@@ -25,6 +25,8 @@
     "NewClasseAtivo": "New Asset Class",
     "ClasseAtivos": "Asset Classes",
     "SearchClasseAtivo": "Search Asset Classes",
+    "AnSetorIsRequiredForCreatingAsset": "An Setor Is Required For Creating Asset",
+    "AnClasseAtivoIsRequiredForCreatingAsset": "An Asset Class Is Required For Creating Asset",
 
     "Menu:Operacoes": "Operations",
     "NewOperacao": "New Operation",

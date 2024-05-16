@@ -96,19 +96,29 @@ public class MyInvestmentsDbContext :
         //    //...
         //});
 
-        builder.Entity<Ativo>(b =>
+        builder.Entity<Ativo>(entity =>
         {
-            b.ToTable(MyInvestmentsConsts.DbTablePrefix + "Ativos",
+            entity.ToTable(MyInvestmentsConsts.DbTablePrefix + "Ativos",
                 MyInvestmentsConsts.DbSchema);
-            b.ConfigureByConvention(); //auto configure for the base class props
-            b.Property(x => x.Ticker).IsRequired().HasMaxLength(AtivoConsts.MaxTickerLength);
-            b.HasIndex(u => u.Ticker);
-            b.Property(x => x.Nome).IsRequired().HasMaxLength(AtivoConsts.MaxNomeLength);
-            b.HasIndex(u => u.Nome);
+            entity.ConfigureByConvention(); //auto configure for the base class props
+            
+            entity.Property(x => x.Ticker).IsRequired().HasMaxLength(AtivoConsts.MaxTickerLength);
+            entity.HasIndex(u => u.Ticker);
+            
+            entity.Property(x => x.Nome).IsRequired().HasMaxLength(AtivoConsts.MaxNomeLength);
+            entity.HasIndex(u => u.Nome);
 
-                    // ADD THE MAPPING FOR THE RELATION
-                    b.HasOne<ClasseAtivo>().WithMany().HasForeignKey(x => x.ClasseAtivoId).IsRequired();
-                    b.HasOne<Setor>().WithMany().HasForeignKey(x => x.SetorId).IsRequired();
+            // ADD THE MAPPING FOR THE RELATION
+            entity
+                .HasOne(a => a.ClasseAtivo)
+                .WithMany()
+                .HasForeignKey(a => a.ClasseAtivoId)
+                .IsRequired();
+            entity
+                .HasOne(a => a.Setor)
+                .WithMany()
+                .HasForeignKey(a => a.SetorId)
+                .IsRequired();
         });
 
         builder.Entity<ClasseAtivo>(b =>

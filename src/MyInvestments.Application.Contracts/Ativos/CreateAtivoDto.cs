@@ -18,9 +18,9 @@ public class CreateAtivoDto : IValidatableObject
 
     public string? Descricao { get; set; }
 
-            //Adiciona referencias
-            public Guid ClasseAtivoId { get; set; }
-            public Guid SetorId { get; set; }
+    //Adiciona referencias
+    public Guid ClasseAtivoId { get; set; }
+    public Guid SetorId { get; set; }
 
     //Valida se nome e descrição são iguais
     public IEnumerable<ValidationResult> Validate(

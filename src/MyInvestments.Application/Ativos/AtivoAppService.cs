@@ -10,6 +10,7 @@ using MyInvestments.ClasseAtivos;
 using MyInvestments.Setores;
 using Volo.Abp.ObjectMapping;
 using AutoMapper.Internal.Mappers;
+using DocumentFormat.OpenXml.Presentation;
 
 namespace MyInvestments.Ativos;
 
@@ -19,31 +20,20 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
     private readonly IAtivoRepository _ativoRepository;
     private readonly AtivoManager _ativoManager;
 
-                //Adiciona Relacionamento
-                private readonly IClasseAtivoRepository _classeAtivoRepository;
-                private readonly ClasseAtivoManager _classeAtivoManager;
-                private readonly ISetorRepository _setorRepository;
-                private readonly SetorManager _setorManager;
+    private readonly ISetorRepository _setorRepository;
+    private readonly IClasseAtivoRepository _classeAtivoRepository;
 
     public AtivoAppService(
         IAtivoRepository ativoRepository,
         AtivoManager ativoManager,
-
-                    //Adiciona Relacionamento
-                    IClasseAtivoRepository classeAtivoRepository,
-                    ClasseAtivoManager classeAtivoManager,
-                    ISetorRepository setorRepository,
-                    SetorManager setorManager
+        ISetorRepository setorRepository,
+        IClasseAtivoRepository classeAtivoRepository
         )
     {
         _ativoRepository = ativoRepository;
         _ativoManager = ativoManager;
-
-                    //Adiciona Relacionamento
-                    _classeAtivoRepository = classeAtivoRepository; 
-                    _classeAtivoManager = classeAtivoManager;
-                    _setorRepository = setorRepository;
-                    _setorManager = setorManager;
+        _setorRepository = setorRepository;
+        _classeAtivoRepository = classeAtivoRepository;
     }
 
     //...SERVICE METHODS WILL COME HERE...
@@ -73,9 +63,20 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
             : await _ativoRepository.CountAsync(
                 ativo => ativo.Ticker.Contains(input.Filter));
 
+        var l = new List<AtivoDto>();
+
+        foreach (var ativo in ativos)
+        {
+            var ativoDto = ObjectMapper.Map<Ativo, AtivoDto>(ativo);
+            ativoDto.Setor = ObjectMapper.Map<Setor, SetorDto>(ativo.Setor);
+            ativoDto.ClasseAtivo = ObjectMapper.Map<ClasseAtivo, ClasseAtivoDto>(ativo.ClasseAtivo);
+            l.Add( ativoDto );
+        }
+
         return new PagedResultDto<AtivoDto>(
             totalCount,
-            ObjectMapper.Map<List<Ativo>, List<AtivoDto>>(ativos)
+            l
+
         );
     }
 
@@ -85,8 +86,14 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         var ativo = await _ativoManager.CreateAsync(
             input.Ticker,
             input.Nome,
+            input.SetorId,
+            input.ClasseAtivoId,
             input.Descricao
         );
+
+        ativo.ClasseAtivo = await _classeAtivoRepository.GetAsync(input.ClasseAtivoId);
+
+        ativo.Setor = await _setorRepository.GetAsync(input.SetorId);
 
         await _ativoRepository.InsertAsync(ativo);
 
@@ -110,6 +117,10 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
 
         ativo.Descricao = input.Descricao;
 
+        ativo.SetorId = input.SetorId;
+
+        ativo.ClasseAtivoId = input.ClasseAtivoId;
+
         await _ativoRepository.UpdateAsync(ativo);
     }
 
@@ -126,23 +137,30 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         return ObjectMapper.Map<List<Ativo>, List<AtivoDto>>(ativos);
     }
 
-                //Adiciona Relacionamento
-                public async Task<ListResultDto<ClasseAtivoLookupDto>> GetClasseAtivoLookupAsync()
-                {
-                    var classeAtivos = await _classeAtivoRepository.GetListAsync();
+    //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
+    public async Task<ListResultDto<SetorLookupDto>> GetSetorLookupAsync()
+    {
+        var setores = await _setorRepository.GetListAsync();
 
-                    return new ListResultDto<ClasseAtivoLookupDto>(
-                        ObjectMapper.Map<List<ClasseAtivo>, List<ClasseAtivoLookupDto>>(classeAtivos)
-                    );
-                }
-                //Adiciona Relacionamento
-                public async Task<ListResultDto<SetorLookupDto>> GetSetorLookupAsync()
-                {
-                    var setores = await _setorRepository.GetListAsync();
+        return new ListResultDto<SetorLookupDto>(
+            ObjectMapper.Map<List<Setor>, List<SetorLookupDto>>(setores)
+        );
+    }
 
-                    return new ListResultDto<SetorLookupDto>(
-                        ObjectMapper.Map<List<Setor>, List<SetorLookupDto>>(setores)
-                    );
-                }
+    //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
+    public async Task<ListResultDto<ClasseAtivoLookupDto>> GetClasseAtivoLookupAsync()
+    {
+        var classeAtivos = await _classeAtivoRepository.GetListAsync();
 
+        return new ListResultDto<ClasseAtivoLookupDto>(
+            ObjectMapper.Map<List<ClasseAtivo>, List<ClasseAtivoLookupDto>>(classeAtivos)
+        );
+    }
+
+    //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
+    public async Task<List<AtivoDto>> GetListAllAtivoAsync()
+    {
+        var ativos = await _ativoRepository.GetListAllAtivoAsync();
+        return ObjectMapper.Map<List<Ativo>, List<AtivoDto>>(ativos);
+    }
 }

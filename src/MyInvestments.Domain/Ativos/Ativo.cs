@@ -1,5 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
+using MyInvestments.ClasseAtivos;
+using MyInvestments.Setores;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -14,7 +16,9 @@ public class Ativo : FullAuditedAggregateRoot<Guid>
 
                 //Adicionando relacionameno
                 public Guid ClasseAtivoId { get; set; }
+                public ClasseAtivo ClasseAtivo { get; set; }
                 public Guid SetorId { get; set; }
+                public Setor Setor    { get; set; }
 
     private Ativo()
     {
@@ -24,18 +28,17 @@ public class Ativo : FullAuditedAggregateRoot<Guid>
     internal Ativo(Guid id,
         string ticker,
         string nome,
+        Guid classeAtivoId,
+        Guid setorId,
         string? descricao = null
-        //,
-        //Guid classeAtivoId,
-        //Guid setorId
         )
         : base(id)
     {
         SetNome(nome);
         SetTicker(ticker);
+        ClasseAtivoId = classeAtivoId;
+        SetorId = setorId;
         Descricao = descricao;
-        //ClasseAtivoId = classeAtivoId;
-        //SetorId = setorId;
     }
 
     internal Ativo ChangeNome(string nome)

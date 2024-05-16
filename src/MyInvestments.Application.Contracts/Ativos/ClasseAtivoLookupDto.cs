@@ -5,5 +5,5 @@ namespace MyInvestments.Ativos;
 
 public class ClasseAtivoLookupDto : EntityDto<Guid>
 {
-    public string Descricao { get; set; }
+    public string Nome { get; set; }
 }

@@ -72,7 +72,7 @@ namespace MyInvestments.ExcelExport
             return memoryStream.ToArray();
         }
 
-        public static byte[] GenerateExcelFileAtivos(List<AtivoDto> lAtivo)
+        public static byte[] GenerateExcelFileAtivos(List<Ativo> lAtivo)
         {
             var memoryStream = new MemoryStream();
 
@@ -172,7 +172,7 @@ namespace MyInvestments.ExcelExport
             return memoryStream.ToArray();
         }
 
-        public static byte[] GenerateExcelFileTipoTransacoes(List<TipoTransacaoDto> lTipoTransacao)
+        public static byte[] GenerateExcelFileTipoTransacoes(List<TipoTransacao> lTipoTransacao)
         {
             var memoryStream = new MemoryStream();
 
@@ -224,7 +224,7 @@ namespace MyInvestments.ExcelExport
             return memoryStream.ToArray();
         }
 
-        public static byte[] GenerateExcelFileSetores(List<SetorDto> lSetores)
+        public static byte[] GenerateExcelFileSetores(List<Setor> lSetores)
         {
             var memoryStream = new MemoryStream();
 
@@ -276,7 +276,7 @@ namespace MyInvestments.ExcelExport
             return memoryStream.ToArray();
         }
 
-        public static byte[] GenerateExcelFileClasseAtivos(List<ClasseAtivoDto> lClasseAtivo)
+        public static byte[] GenerateExcelFileClasseAtivos(List<ClasseAtivo> lClasseAtivo)
         {
             var memoryStream = new MemoryStream();
 
@@ -328,7 +328,7 @@ namespace MyInvestments.ExcelExport
             return memoryStream.ToArray();
         }
 
-        public static byte[] GenerateExcelFileOperacoes(List<OperacaoDto> lOperacoes)
+        public static byte[] GenerateExcelFileOperacoes(List<Operacao> lOperacoes)
         {
             var memoryStream = new MemoryStream();
 
@@ -423,7 +423,7 @@ namespace MyInvestments.ExcelExport
                 row.AppendChild(
                     new Cell
                     {
-                        CellValue = new CellValue(item.ValorCorretagem),
+                        CellValue = new CellValue((double)item.ValorCorretagem),
                         DataType = CellValues.Number
                     });
 

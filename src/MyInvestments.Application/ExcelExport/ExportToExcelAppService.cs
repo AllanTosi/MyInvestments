@@ -46,22 +46,7 @@ namespace MyInvestments.ExcelExport
 
             var lAtivos = await _ativoRepository.GetListWithRelationshipAsync();
 
-            var lAtivoDtos = lAtivos.Select(ativo => new AtivoDto
-            {
-                Ticker = ativo.Ticker,
-                Nome = ativo.Nome,
-                Descricao = ativo.Descricao,
-                Setor = new SetorDto
-                {
-                    Descricao = ativo.Setor.Descricao
-                },
-                ClasseAtivo = new ClasseAtivoDto
-                {
-                    Nome = ativo.ClasseAtivo.Nome
-                }
-            }).ToList();
-
-            return GenerateExcelFileAtivos(lAtivoDtos);
+            return GenerateExcelFileAtivos(lAtivos);
         }
 
         public async Task<byte[]> ExportToExcelTipoTransacoes()
@@ -69,10 +54,8 @@ namespace MyInvestments.ExcelExport
             await CheckPolicyAsync(MyInvestmentsPermissions.TipoTransacoes.Default);
 
             var lTipoTransacoes = await _transacaoRepository.GetListAsync();
-            
-            var lTipoTransacoes2 = ObjectMapper.Map<List<TipoTransacao>, List<TipoTransacaoDto>>(lTipoTransacoes);
 
-            return GenerateExcelFileTipoTransacoes(lTipoTransacoes2);
+            return GenerateExcelFileTipoTransacoes(lTipoTransacoes);
         }
 
         public async Task<byte[]> ExportToExcelSetores()
@@ -81,9 +64,7 @@ namespace MyInvestments.ExcelExport
 
             var lSetores = await _setorRepository.GetListAsync();
 
-            var lSetoresDto = ObjectMapper.Map<List<Setor>, List<SetorDto>>(lSetores);
-
-            return GenerateExcelFileSetores(lSetoresDto);
+            return GenerateExcelFileSetores(lSetores);
         }
 
         public async Task<byte[]> ExportToExcelClasseAtivos()
@@ -92,9 +73,7 @@ namespace MyInvestments.ExcelExport
 
             var lClasseAtivos = await _classeAtivoRepository.GetListAsync();
 
-            var lGenerateExcelFileClasseAtivos = ObjectMapper.Map<List<ClasseAtivo>, List<ClasseAtivoDto>>(lClasseAtivos);
-
-            return GenerateExcelFileClasseAtivos(lGenerateExcelFileClasseAtivos);
+            return GenerateExcelFileClasseAtivos(lClasseAtivos);
         }
 
         public async Task<byte[]> ExportToExcelOperacoes()
@@ -104,9 +83,7 @@ namespace MyInvestments.ExcelExport
             //quando fizer os relacionamentos tera que presonalizar igual ao Ativos
             var lOperacao = await _operacaoRepository.GetListAsync();
 
-            var lOperacaoDto = ObjectMapper.Map<List<Operacao>, List<OperacaoDto>>(lOperacao);
-
-            return GenerateExcelFileOperacoes(lOperacaoDto);
+            return GenerateExcelFileOperacoes(lOperacao);
         }
     }
 }

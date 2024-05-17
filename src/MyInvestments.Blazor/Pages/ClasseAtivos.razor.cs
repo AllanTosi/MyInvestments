@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Components.Web.LeptonXLiteTheme.Themes.LeptonXLite;
 using AutoMapper.Internal.Mappers;
+using Microsoft.JSInterop;
 
 namespace MyInvestments.Blazor.Pages;
 
@@ -166,5 +167,11 @@ public partial class ClasseAtivos
         }
 
         GetClasseAtivosAsync();
+    }
+    private async Task ExportToExcel()
+    {
+        var excelBytes = await ExportToExcelAppService.ExportToExcelClasseAtivos();
+        await JsRuntime.InvokeVoidAsync("saveAsFile", $"ClasseAtivos_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx",
+            Convert.ToBase64String(excelBytes));
     }
 }

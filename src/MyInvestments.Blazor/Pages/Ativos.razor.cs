@@ -13,6 +13,7 @@ using MyInvestments.Setores;
 using MyInvestments.ClasseAtivos;
 using Volo.Abp;
 using Volo.Abp.ObjectMapping;
+using Microsoft.JSInterop;
 
 namespace MyInvestments.Blazor.Pages;
 
@@ -186,5 +187,12 @@ public partial class Ativos
         }
 
         GetAtivosAsync();
+    }
+
+    private async Task ExportToExcel()
+    {
+        var excelBytes = await ExportToExcelAppService.ExportToExcelAtivos();
+        await JsRuntime.InvokeVoidAsync("saveAsFile", $"Ativos_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx",
+            Convert.ToBase64String(excelBytes));
     }
 }

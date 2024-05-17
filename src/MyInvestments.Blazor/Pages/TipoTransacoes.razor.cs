@@ -9,6 +9,7 @@ using Blazorise.DataGrid;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Components.Web.LeptonXLiteTheme.Themes.LeptonXLite;
+using Microsoft.JSInterop;
 
 namespace MyInvestments.Blazor.Pages;
 
@@ -165,5 +166,12 @@ public partial class TipoTransacoes
         }
 
         GetTipoTransacoesAsync();
+    }
+
+    private async Task ExportToExcel()
+    {
+        var excelBytes = await ExportToExcelAppService.ExportToExcelTipoTransacoes();
+        await JsRuntime.InvokeVoidAsync("saveAsFile", $"TipoTransacoes_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx",
+            Convert.ToBase64String(excelBytes));
     }
 }

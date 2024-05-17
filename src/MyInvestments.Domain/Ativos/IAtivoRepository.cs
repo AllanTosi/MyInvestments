@@ -12,6 +12,7 @@ public interface IAtivoRepository : IRepository<Ativo, Guid>
     Task<Ativo> FindByNomeAsync(string nome);
 
     Task<List<Ativo>> GetListByTickerAsync(string ticker);
+    Task<List<Ativo>> GetListWithRelationshipAsync();
 
     Task<List<Ativo>> GetListAsync(
         int skipCount,

@@ -133,7 +133,12 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
     //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
     public async Task<List<AtivoDto>> GetListByTickerAsync(string ticker)
     {
-        var ativos = await _ativoRepository.GetListByTickerAsync(ticker);
+        var ativos = new List<Ativo>();
+        if (CurrentUser.IsInRole("admin"))
+            ativos = await _ativoRepository.GetListByTickerAsync(ticker);
+        else
+            ativos = await _ativoRepository.GetListByTickerAsync(ticker, CurrentUser.Id);
+
         return ObjectMapper.Map<List<Ativo>, List<AtivoDto>>(ativos);
     }
 
@@ -160,7 +165,7 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
     //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
     public async Task<List<AtivoDto>> GetListAllAtivoAsync()
     {
-        var ativos = await _ativoRepository.GetListAllAtivoAsync();
+        var ativos = await _ativoRepository.GetListWithRelationshipAsync();
         return ObjectMapper.Map<List<Ativo>, List<AtivoDto>>(ativos);
     }
 }

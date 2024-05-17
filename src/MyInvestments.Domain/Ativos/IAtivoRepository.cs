@@ -11,7 +11,8 @@ public interface IAtivoRepository : IRepository<Ativo, Guid>
 
     Task<Ativo> FindByNomeAsync(string nome);
 
-    Task<List<Ativo>> GetListByTickerAsync(string ticker);
+    Task<List<Ativo>> GetListByTickerAsync(string ticker, Guid? userid = null);
+
     Task<List<Ativo>> GetListWithRelationshipAsync();
 
     Task<List<Ativo>> GetListAsync(

@@ -2092,17 +2092,21 @@ namespace MyInvestments.Migrations
 
             modelBuilder.Entity("MyInvestments.Ativos.Ativo", b =>
                 {
-                    b.HasOne("MyInvestments.ClasseAtivos.ClasseAtivo", null)
+                    b.HasOne("MyInvestments.ClasseAtivos.ClasseAtivo", "ClasseAtivo")
                         .WithMany()
                         .HasForeignKey("ClasseAtivoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyInvestments.Setores.Setor", null)
+                    b.HasOne("MyInvestments.Setores.Setor", "Setor")
                         .WithMany()
                         .HasForeignKey("SetorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ClasseAtivo");
+
+                    b.Navigation("Setor");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>

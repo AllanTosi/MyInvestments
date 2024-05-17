@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace MyInvestments.Migrations
 {
     [DbContext(typeof(MyInvestmentsDbContext))]
-    [Migration("20240512135255_Added_ClasseAtivoId_AND_Setor_To_Ativo")]
-    partial class Added_ClasseAtivoId_AND_Setor_To_Ativo
+    [Migration("20240515135756_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2095,17 +2095,21 @@ namespace MyInvestments.Migrations
 
             modelBuilder.Entity("MyInvestments.Ativos.Ativo", b =>
                 {
-                    b.HasOne("MyInvestments.ClasseAtivos.ClasseAtivo", null)
+                    b.HasOne("MyInvestments.ClasseAtivos.ClasseAtivo", "ClasseAtivo")
                         .WithMany()
                         .HasForeignKey("ClasseAtivoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyInvestments.Setores.Setor", null)
+                    b.HasOne("MyInvestments.Setores.Setor", "Setor")
                         .WithMany()
                         .HasForeignKey("SetorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ClasseAtivo");
+
+                    b.Navigation("Setor");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>

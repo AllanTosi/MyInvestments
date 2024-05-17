@@ -10,9 +10,6 @@ public interface ISetorRepository : IRepository<Setor, Guid>
     Task<Setor> FindByDescricaoAsync(string descricao);
     Task<List<Setor>> GetListByDescricaoAsync(string descricao);
 
-    Task<List<Setor>> GetListAllSetorAsync();
-
-
     Task<List<Setor>> GetListAsync(
         int skipCount,
         int maxResultCount,

@@ -54,10 +54,4 @@ public class EfCoreSetorRepository
                 )
             .ToListAsync();
     }
-
-    public async Task<List<Setor>> GetListAllSetorAsync()
-    {
-        var dbSet = await GetDbSetAsync();
-        return await dbSet.ToListAsync();
-    }
 }

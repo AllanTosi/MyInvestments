@@ -11,10 +11,8 @@ public interface ISetorAppService : IApplicationService
     Task<SetorDto> GetAsync(Guid id);
 
     Task<PagedResultDto<SetorDto>> GetListAsync(GetSetorListDto input);
-    
-    Task<List<SetorDto>> GetListByDescricaoAsync(string descricao);
 
-    Task<List<SetorDto>> GetListAllSetorAsync();
+    Task<List<SetorDto>> GetListByDescricaoAsync(string descricao);
 
     Task<SetorDto> CreateAsync(CreateSetorDto input);
 

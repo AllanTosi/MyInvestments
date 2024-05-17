@@ -111,7 +111,6 @@
                                 Caption="@L["BrokerageValue"]">
                 </DataGridColumn>
 
-
             </DataGridColumns>
         </DataGrid>
         <Row Class="d-flex px-0 mx-0 mb-1">
@@ -192,16 +191,13 @@
                         </Field>
                     </Validation>
 
-        @*             <Validation MessageLocalizer="@LH.Localize">
+                    <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["BrokerageValue"]</FieldLabel>
-                            <NumericEdit TValue?="float" @bind-Value="@NewOperacao.ValorCorretagem" Type="number" >
-                                <Feedback>
-                                    <ValidationError />
-                                </Feedback>
+                            <NumericEdit TValue="float?" @bind-Value="@NewOperacao.ValorCorretagem" Type="number" >
                             </NumericEdit> 
                         </Field>
-                    </Validation> *@
+                    </Validation>
 
 
                 </Validations>
@@ -288,16 +284,16 @@
                         </Field>
                     </Validation>
 
-        @*             <Validation MessageLocalizer="@LH.Localize">
+                    <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["BrokerageValue"]</FieldLabel>
-                    <NumericEdit TValue?="float" @bind-Value="@EditingOperacao.ValorCorretagem" Type="number" >
+                    <NumericEdit TValue="float?" @bind-Value="@EditingOperacao.ValorCorretagem" Type="number" >
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
                             </NumericEdit> 
                         </Field>
-                    </Validation> *@
+                    </Validation>
 
                 </Validations>
             </ModalBody>

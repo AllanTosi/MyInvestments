@@ -92,4 +92,11 @@ public class SetorAppService : MyInvestmentsAppService, ISetorAppService
         var setores = await _setorRepository.GetListByDescricaoAsync(descricao);
         return ObjectMapper.Map<List<Setor>, List < SetorDto >> (setores);
     }
+    
+    //[Authorize(MyInvestmentsPermissions.Setores.Default)]
+    public async Task<List<SetorDto>> GetListAllSetorAsync()
+    {
+        var setores = await _setorRepository.GetListAllSetorAsync();
+        return ObjectMapper.Map<List<Setor>, List<SetorDto>>(setores);
+    }
 }

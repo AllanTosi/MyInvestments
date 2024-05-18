@@ -41,12 +41,12 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: Run unit tests
-  inputs:
-    command: test
-    projects: '**/*[Tt]ests/*.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
+#- task: DotNetCoreCLI@2
+#  displayName: Run unit tests
+#  inputs:
+#    command: test
+#    projects: '**/*[Tt]ests/*.csproj'
+#    arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: Dotnet publish

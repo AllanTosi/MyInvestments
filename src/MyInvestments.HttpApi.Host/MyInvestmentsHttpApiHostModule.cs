@@ -70,7 +70,7 @@ public class MyInvestmentsHttpApiHostModule : AbpModule
         {
             builder.AddValidation(options =>
             {
-                options.AddAudiences("Abp2Azure");
+                options.AddAudiences("MyInvestments");
                 options.UseLocalServer();
                 options.UseAspNetCore();
             });

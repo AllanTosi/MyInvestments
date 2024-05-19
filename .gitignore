@@ -266,3 +266,6 @@ src/MyInvestments.Blazor.Server.Tiered/Logs/*
 
 # Postgre Dados
 /.postgres-data
+
+# Solução passo 7 - FileNotFoundException
+!openiddict.pfx

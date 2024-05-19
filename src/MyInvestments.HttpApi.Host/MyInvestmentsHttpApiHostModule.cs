@@ -30,6 +30,12 @@ using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.AspNetCore.ExceptionHandling;
+using Volo.Abp.OpenIddict;
+using static IdentityModel.ClaimComparer;
+using Microsoft.AspNetCore.Hosting;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace MyInvestments;
 
@@ -48,6 +54,7 @@ public class MyInvestmentsHttpApiHostModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
+        /*
         PreConfigure<OpenIddictBuilder>(builder =>
         {
             builder.AddValidation(options =>
@@ -57,6 +64,53 @@ public class MyInvestmentsHttpApiHostModule : AbpModule
                 options.UseAspNetCore();
             });
         });
+        */
+
+        PreConfigure<OpenIddictBuilder>(builder =>
+        {
+            builder.AddValidation(options =>
+            {
+                options.AddAudiences("Abp2Azure");
+                options.UseLocalServer();
+                options.UseAspNetCore();
+            });
+
+            var hostingEnvironment = context.Services.GetHostingEnvironment();
+            var configuration = context.Services.GetConfiguration();
+
+            if (hostingEnvironment.IsDevelopment()) return;
+
+            PreConfigure<AbpOpenIddictAspNetCoreOptions>(options =>
+            {
+                options.AddDevelopmentEncryptionAndSigningCertificate = false;
+            });
+
+            PreConfigure<OpenIddictServerBuilder>(serverBuilder =>
+            {
+                serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", configuration["OpenIddictCertificate:X590:Password"]);
+            });
+        });
+
+        // Segunda solução
+        //var hostingEnvironment = context.Services.GetHostingEnvironment();
+
+        //if (!hostingEnvironment.IsDevelopment())
+        //{
+        //    PreConfigure<AbpOpenIddictAspNetCoreOptions>(options =>
+        //    {
+        //        options.AddDevelopmentEncryptionAndSigningCertificate = false;
+        //    });
+
+        //    PreConfigure<OpenIddictServerBuilder>(builder =>
+        //    {
+        //        // In production, it is recommended to use two RSA certificates, 
+        //        // one for encryption, one for signing.
+        //        builder.AddEncryptionCertificate(
+        //                GetEncryptionCertificate(hostingEnvironment, context.Services.GetConfiguration()));
+        //        builder.AddSigningCertificate(
+        //                GetSigningCertificate(hostingEnvironment, context.Services.GetConfiguration()));
+        //    });
+        //}
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -229,4 +283,67 @@ public class MyInvestmentsHttpApiHostModule : AbpModule
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
     }
+
+    // Segunda solução
+    //private X509Certificate2 GetSigningCertificate(IWebHostEnvironment hostingEnv,
+    //                            IConfiguration configuration)
+    //{
+    //    var fileName = $"cert-signing.pfx";
+    //    var passPhrase = configuration["MyAppCertificate:X590:PassPhrase"];
+    //    var file = Path.Combine(hostingEnv.ContentRootPath, fileName);
+    //    if (File.Exists(file))
+    //    {
+    //        var created = File.GetCreationTime(file);
+    //        var days = (DateTime.Now - created).TotalDays;
+    //        if (days > 180)
+    //            File.Delete(file);
+    //        else
+    //            return new X509Certificate2(file, passPhrase,
+    //                         X509KeyStorageFlags.MachineKeySet);
+    //    }
+
+    //    // file doesn't exist or was deleted because it expired
+    //    using var algorithm = RSA.Create(keySizeInBits: 2048);
+    //    var subject = new X500DistinguishedName("CN=Fabrikam Signing Certificate");
+    //    var request = new CertificateRequest(subject, algorithm,
+    //                        HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+    //    request.CertificateExtensions.Add(new X509KeyUsageExtension(
+    //                        X509KeyUsageFlags.DigitalSignature, critical: true));
+    //    var certificate = request.CreateSelfSigned(DateTimeOffset.UtcNow,
+    //                        DateTimeOffset.UtcNow.AddYears(2));
+    //    File.WriteAllBytes(file, certificate.Export(X509ContentType.Pfx, string.Empty));
+    //    return new X509Certificate2(file, passPhrase,
+    //                        X509KeyStorageFlags.MachineKeySet);
+    //}
+
+    //private X509Certificate2 GetEncryptionCertificate(IWebHostEnvironment hostingEnv,
+    //                             IConfiguration configuration)
+    //{
+    //    var fileName = $"cert-encryption.pfx";
+    //    var passPhrase = configuration["MyAppCertificate:X590:PassPhrase"];
+    //    var file = Path.Combine(hostingEnv.ContentRootPath, fileName);
+    //    if (File.Exists(file))
+    //    {
+    //        var created = File.GetCreationTime(file);
+    //        var days = (DateTime.Now - created).TotalDays;
+    //        if (days > 180)
+    //            File.Delete(file);
+    //        else
+    //            return new X509Certificate2(file, passPhrase,
+    //                            X509KeyStorageFlags.MachineKeySet);
+    //    }
+
+    //    // file doesn't exist or was deleted because it expired
+    //    using var algorithm = RSA.Create(keySizeInBits: 2048);
+    //    var subject = new X500DistinguishedName("CN=Fabrikam Encryption Certificate");
+    //    var request = new CertificateRequest(subject, algorithm,
+    //                        HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+    //    request.CertificateExtensions.Add(new X509KeyUsageExtension(
+    //                        X509KeyUsageFlags.KeyEncipherment, critical: true));
+    //    var certificate = request.CreateSelfSigned(DateTimeOffset.UtcNow,
+    //                        DateTimeOffset.UtcNow.AddYears(2));
+    //    File.WriteAllBytes(file, certificate.Export(X509ContentType.Pfx, string.Empty));
+    //    return new X509Certificate2(file, passPhrase, X509KeyStorageFlags.MachineKeySet);
+    //}
+
 }

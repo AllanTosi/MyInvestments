@@ -87,7 +87,8 @@ public class MyInvestmentsHttpApiHostModule : AbpModule
 
             PreConfigure<OpenIddictServerBuilder>(serverBuilder =>
             {
-                serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", configuration["OpenIddictCertificate:X590:Password"]);
+                //serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", configuration["OpenIddictCertificate:X590:Password"]);
+                serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", "f97f0fb2-6263-4464-945c-a636cc6b1cb3");
             });
         });
 

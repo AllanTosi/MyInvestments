@@ -14,7 +14,7 @@ using DocumentFormat.OpenXml.Presentation;
 
 namespace MyInvestments.Ativos;
 
-//[Authorize(MyInvestmentsPermissions.Ativos.Default)]
+[Authorize(MyInvestmentsPermissions.Ativos.Default)]
 public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
 {
     private readonly IAtivoRepository _ativoRepository;
@@ -80,7 +80,7 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         );
     }
 
-    //[Authorize(MyInvestmentsPermissions.Ativos.Create)]
+    [Authorize(MyInvestmentsPermissions.Ativos.Create)]
     public async Task<AtivoDto> CreateAsync(CreateAtivoDto input)
     {
         var ativo = await _ativoManager.CreateAsync(
@@ -100,7 +100,7 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         return ObjectMapper.Map<Ativo, AtivoDto>(ativo);
     }
 
-    //[Authorize(MyInvestmentsPermissions.Ativos.Edit)]
+    [Authorize(MyInvestmentsPermissions.Ativos.Edit)]
     public async Task UpdateAsync(Guid id, UpdateAtivoDto input)
     {
         var ativo = await _ativoRepository.GetAsync(id);
@@ -124,7 +124,7 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         await _ativoRepository.UpdateAsync(ativo);
     }
 
-    //[Authorize(MyInvestmentsPermissions.Ativos.Delete)]
+    [Authorize(MyInvestmentsPermissions.Ativos.Delete)]
     public async Task DeleteAsync(Guid id)
     {
         await _ativoRepository.DeleteAsync(id);

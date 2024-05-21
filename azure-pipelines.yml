@@ -5,9 +5,11 @@
 
 trigger:
 - master
+tags:
+- Production
 
-pool: AllanPool
-   # vmImage: 'windows-latest'
+pool: MyPool
+  # vmImage: 'windows-latest'
 
 variables:
   solution: '**/*.sln'

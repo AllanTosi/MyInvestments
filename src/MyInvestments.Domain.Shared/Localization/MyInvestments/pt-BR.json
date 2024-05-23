@@ -1,8 +1,100 @@
 {
   "culture": "pt-BR",
   "texts": {
-    "Menu:Home": "Principal",
-    "Welcome": "Seja bem-vindo!",
-    "LongWelcomeMessage": "Bem-vindo a esta aplicação. Este é um projeto inicial baseado no ABP framework. Para mais informações, visite abp.io."
+    "Menu:Home": "Início",
+    "Welcome": "Bem-vindo",
+    "LongWelcomeMessage": "Bem-vindo ao My Investments.",
+
+    "Actions": "Ações",
+    "Close": "Fechar",
+    "Delete": "Excluir",
+    "Edit": "Editar",
+    "PublishDate": "Data de Publicação",
+    "CreationTime": "Hora de Criação",
+    "Export": "Exportar",
+
+    "Menu:MyInvestments": "Meus Investimentos",
+
+    "Menu:Ativos": "Ativos",
+    "NewAtivo": "Novo Ativo",
+    "SearchTicker": "Buscar por Ticker",
+    "Ativos": "Ativos",
+    "Ticker": "Ticker",
+    "DescriptionAsset": "Descrição",
+
+    "Menu:ClasseAtivos": "Classes de Ativos",
+    "NewClasseAtivo": "Nova Classe de Ativo",
+    "ClasseAtivos": "Classes de Ativos",
+    "SearchClasseAtivo": "Buscar Classes de Ativos",
+    "AnSetorIsRequiredForCreatingAsset": "Um Setor é necessário para criar um Ativo",
+    "AnClasseAtivoIsRequiredForCreatingAsset": "Uma Classe de Ativo é necessária para criar um Ativo",
+
+    "Menu:Operacoes": "Operações",
+    "NewOperacao": "Nova Operação",
+    "Operacoes": "Operações",
+    "SearchOperacao": "Buscar Operações por Data",
+    "OperationDate": "Data da Operação",
+    "Quantity": "Quantidade",
+    "Price": "Preço",
+    "EmolumentValue": "Valor do Emolumento",
+    "IRPFValue": "Valor do IRPF",
+    "BrokerageValue": "Valor da Corretagem",
+
+    "Menu:Setores": "Setores",
+    "NewSetor": "Novo Setor",
+    "Setores": "Setores",
+    "SearchSetor": "Buscar Setor",
+
+    "Menu:TipoTransacoes": "Tipos de Transação",
+    "NewTipoTransacao": "Novo Tipo de Transação",
+    "TipoTransacoes": "Tipos de Transação",
+    "SearchTipoTransacao": "Buscar Tipo de Transação",
+
+    //CRUD
+    //Label comuns nas telas ClasseAtivo, Setor e Ativos
+    "Description": "Descrição",
+    "Name": "Nome",
+    "Search": "Buscar",
+
+    "successMessage": "Suas alterações foram salvas com sucesso!",
+    "AddSuccessMessage": "Item adicionado com sucesso.",
+    "UpdateSuccessMessage": "Item atualizado com sucesso.",
+
+    "AreYouSure": "Você tem certeza?",
+    "AreYouSureToDelete": "Você tem certeza que deseja excluir este item?",
+
+    //Erro msg
+    "MyInvestments:00001": "Já existe um ativo com o mesmo ticker: {ticker}",
+    "MyInvestments:00002": "Já existe uma classe de ativo com o mesmo nome: {nome}",
+    "MyInvestments:00003": "Já existe um setor com a mesma descrição: {descricao}",
+    "MyInvestments:00004": "Já existe um tipo de transação com a mesma descrição: {descricao}",
+    "MyInvestments:00005": "Já existe uma operação com a mesma operação: {operacao}",
+
+    //Permission menus
+    "Permission:MyInvestments": "Meus Investimentos",
+    "Permission:Ativos": "Gerenciamento de Ativos",
+    "Permission:Ativos.Create": "Criando novo Ativo",
+    "Permission:Ativos.Edit": "Editando o Ativo",
+    "Permission:Ativos.Delete": "Excluindo o Ativo",
+
+    "Permission:ClasseAtivos": "Gerenciamento de Classes de Ativos",
+    "Permission:ClasseAtivos.Create": "Criando nova Classe de Ativo",
+    "Permission:ClasseAtivos.Edit": "Editando a Classe de Ativo",
+    "Permission:ClasseAtivos.Delete": "Excluindo a Classe de Ativo",
+
+    "Permission:Operacoes": "Gerenciamento de Operações",
+    "Permission:Operacoes.Create": "Criando nova Operação",
+    "Permission:Operacoes.Edit": "Editando a Operação",
+    "Permission:Operacoes.Delete": "Excluindo a Operação",
+
+    "Permission:Setores": "Gerenciamento de Setores",
+    "Permission:Setores.Create": "Criando novo Setor",
+    "Permission:Setores.Edit": "Editando o Setor",
+    "Permission:Setores.Delete": "Excluindo o Setor",
+
+    "Permission:TipoTransacoes": "Gerenciamento de Transações",
+    "Permission:TipoTransacoes.Create": "Criando nova Transação",
+    "Permission:TipoTransacoes.Edit": "Editando a Transação",
+    "Permission:TipoTransacoes.Delete": "Excluindo a Transação"
   }
 }

@@ -6,13 +6,13 @@
 
 <div class="container">
     <div class="p-5 text-center">
-        <Badge Color="Color.Success" class="mb-4">
+        @* <Badge Color="Color.Success" class="mb-4">
             <h5 class="m-1"> <i class="fas fa-rocket"></i> Congratulations, <strong>MyInvestments</strong> is successfully running!</h5>
-        </Badge>
+        </Badge> *@
 
-        <h1>Welcome to the Application</h1>
+        <h1>@L["LongWelcomeMessage"]</h1>
 
-        <p class="lead px-lg-5 mx-lg-5">@L["LongWelcomeMessage"]</p>
+        @* <p class="lead px-lg-5 mx-lg-5">@L["LongWelcomeMessage"]</p> *@
 
         @if ( !CurrentUser.IsAuthenticated )
         {
@@ -33,6 +33,7 @@
 
     </div>
 
+@* 
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -188,7 +189,8 @@
             <a href="https://twitter.com/abpcommercial" target="_blank" class="mx-2"><i class="fab fa-twitter"></i><span class="text-secondary"> Abp Commercial</span></a>
             <a href="https://github.com/abpframework/abp" target="_blank" class="mx-2"><i class="fab fa-github"></i><span class="text-secondary"> abpframework</span></a>
         </p>
-    </div>
+    </div> *@
+
 </div>
 
 @code {

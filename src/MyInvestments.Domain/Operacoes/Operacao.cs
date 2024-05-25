@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using MyInvestments.Ativos;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -15,12 +16,17 @@ public class Operacao : FullAuditedAggregateRoot<Guid>
     public float ValorIrpf { get; set; }
     public float? ValorCorretagem { get; set; }
 
+    //Adicionando relacionameno
+    public Guid AtivoId { get; set; }
+    public Ativo Ativo { get; set; }
+
     private Operacao()
     {
         /* This constructor is for deserialization / ORM purpose */
     }
 
     internal Operacao(
+        Guid ativoId,
         Guid id,
         DateTime dataOperacao,
         int quantidade,
@@ -30,6 +36,7 @@ public class Operacao : FullAuditedAggregateRoot<Guid>
         float? valorCorretagem = null)
         : base(id)
     {
+        AtivoId = ativoId;
         DataOperacao = dataOperacao;
         Quantidade = quantidade;
         Preco = preco;

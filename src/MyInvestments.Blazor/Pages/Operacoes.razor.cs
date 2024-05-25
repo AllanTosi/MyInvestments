@@ -42,6 +42,8 @@ public partial class Operacoes
     private Validations validationsRef;
     private DateTime SearchOperacao { get; set; }
 
+    IReadOnlyList<AtivoLookupDto> ativoList = Array.Empty<AtivoLookupDto>();
+
     public Operacoes()
     {
         NewOperacao = new CreateOperacaoDto();
@@ -52,6 +54,7 @@ public partial class Operacoes
     {
         await SetPermissionsAsync();
         await GetOperacoesAsync();
+        ativoList = (await OperacaoAppService.GetAtivoLookupAsync()).Items;
     }
 
     private async Task SetPermissionsAsync()
@@ -100,6 +103,7 @@ public partial class Operacoes
 
         NewOperacao = new CreateOperacaoDto();
         CreateOperacaoModal.Show();
+        NewOperacao.AtivoId = OperacaoList.First().Id;
     }
 
     private void CloseCreateOperacaoModal()

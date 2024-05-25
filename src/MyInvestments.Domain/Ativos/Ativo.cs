@@ -14,11 +14,11 @@ public class Ativo : FullAuditedAggregateRoot<Guid>
     //public int Cnpj { get; set; }
     public string Descricao { get; set; }
 
-                //Adicionando relacionameno
-                public Guid ClasseAtivoId { get; set; }
-                public ClasseAtivo ClasseAtivo { get; set; }
-                public Guid SetorId { get; set; }
-                public Setor Setor    { get; set; }
+    //Adicionando relacionameno
+    public Guid ClasseAtivoId { get; set; }
+    public ClasseAtivo ClasseAtivo { get; set; }
+    public Guid SetorId { get; set; }
+    public Setor Setor    { get; set; }
 
     private Ativo()
     {

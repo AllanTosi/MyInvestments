@@ -6,6 +6,8 @@ using MyInvestments.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
+using MyInvestments.Ativos;
+using MyInvestments.Setores;
 
 namespace MyInvestments.Operacoes;
 
@@ -15,12 +17,17 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
     private readonly IOperacaoRepository _operacaoRepository;
     private readonly OperacaoManager _operacaoManager;
 
+    private readonly IAtivoRepository _ativoRepository;
+
     public OperacaoAppService(
         IOperacaoRepository operacaoRepository,
-        OperacaoManager operacaoManager)
+        OperacaoManager operacaoManager,
+        IAtivoRepository ativoRepository
+        )
     {
         _operacaoRepository = operacaoRepository;
         _operacaoManager = operacaoManager;
+        _ativoRepository = ativoRepository;
     }
 
     //...SERVICE METHODS WILL COME HERE...
@@ -49,6 +56,15 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
             : await _operacaoRepository.CountAsync(
                 operacao => operacao.DataOperacao.Equals(input.Filter));
 
+        var listOperacaoDto = new List<OperacaoDto>();
+
+        foreach (var operacao in operacoes)
+        {
+            var operacaoDto = ObjectMapper.Map<Operacao, OperacaoDto>(operacao);
+            operacaoDto.Ativo = ObjectMapper.Map<Ativo, AtivoDto>(operacao.Ativo);
+            listOperacaoDto.Add(operacaoDto);
+        }
+
         return new PagedResultDto<OperacaoDto>(
             totalCount,
             ObjectMapper.Map<List<Operacao>, List<OperacaoDto>>(operacoes)
@@ -59,6 +75,7 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
     public async Task<OperacaoDto> CreateAsync(CreateOperacaoDto input)
     {
         var operacao = await _operacaoManager.CreateAsync(
+            input.AtivoId,
             input.DataOperacao,
             input.Quantidade,
             input.Preco,
@@ -66,6 +83,8 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
             input.ValorIrpf,
             input.ValorCorretagem
         );
+
+        operacao.Ativo = await _ativoRepository.GetAsync(input.AtivoId);
 
         await _operacaoRepository.InsertAsync(operacao);
 
@@ -84,6 +103,8 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
         operacao.ValorIrpf = input.ValorIrpf;
         operacao.ValorCorretagem = input.ValorCorretagem;
 
+        operacao.AtivoId = input.AtivoId;
+
         await _operacaoRepository.UpdateAsync(operacao);
     }
 
@@ -96,6 +117,23 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
     public async Task<List<OperacaoDto>> GetListByDataAsync(DateTime dataOperacao)
     {
         var operacoes = await _operacaoRepository.GetListByDataAsync(dataOperacao);
+        return ObjectMapper.Map<List<Operacao>, List<OperacaoDto>>(operacoes);
+    }
+
+    [Authorize(MyInvestmentsPermissions.Operacoes.Default)]
+    public async Task<ListResultDto<AtivoLookupDto>> GetAtivoLookupAsync()
+    {
+        var ativos = await _ativoRepository.GetListAsync();
+
+        return new ListResultDto<AtivoLookupDto>(
+            ObjectMapper.Map<List<Ativo>, List<AtivoLookupDto>>(ativos)
+        );
+    }
+
+    [Authorize(MyInvestmentsPermissions.Operacoes.Default)]
+    public async Task<List<OperacaoDto>> GetListAllAtivoAsync()
+    {
+        var operacoes = await _operacaoRepository.GetListWithRelationshipAsync();
         return ObjectMapper.Map<List<Operacao>, List<OperacaoDto>>(operacoes);
     }
 }

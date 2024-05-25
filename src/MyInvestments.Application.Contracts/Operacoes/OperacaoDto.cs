@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyInvestments.Ativos;
+using System;
 using Volo.Abp.Application.Dtos;
 
 namespace MyInvestments.Operacoes;
@@ -11,4 +12,7 @@ public class OperacaoDto : EntityDto<Guid>
     public float ValorEmulumento { get; set; }
     public float ValorIrpf { get; set; }
     public float ValorCorretagem { get; set; }
+
+    //Adicionando relacionamento
+    public AtivoDto Ativo { get; set; }
 }

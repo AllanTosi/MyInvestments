@@ -79,6 +79,13 @@
                 </DataGridColumn>
 
                 <DataGridColumn TItem="OperacaoDto"
+                                Caption="AtivoTicker">
+                    <DisplayTemplate>
+                        @context.Ativo.Ticker
+                    </DisplayTemplate>
+                </DataGridColumn>
+
+                <DataGridColumn TItem="OperacaoDto"
                                 Field="@nameof(OperacaoDto.DataOperacao)"
                                 Caption="@L["OperationDate"]">
                     <DisplayTemplate>
@@ -135,6 +142,18 @@
             </ModalHeader>
             <ModalBody>
                 <Validations @ref="@CreateValidationsRef" Model="@NewOperacao" ValidateOnLoad="false">
+
+                    <Field>
+                        <FieldLabel>@L["Ativo"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@NewOperacao.AtivoId">
+                            @foreach (var ativo in ativoList)
+                            {
+                                <SelectItem TValue="Guid" Value="@ativo.Id">
+                                    @ativo.Ticker
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
 
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
@@ -228,6 +247,18 @@
             </ModalHeader>
             <ModalBody>
                 <Validations @ref="@EditValidationsRef" Model="@EditingOperacao" ValidateOnLoad="false">
+
+                    <Field>
+                        <FieldLabel>@L["Ativo"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@EditingOperacao.AtivoId">
+                            @foreach (var ativo in ativoList)
+                            {
+                                <SelectItem TValue="Guid" Value="@ativo.Id">
+                                    @ativo.Ticker
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
 
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>

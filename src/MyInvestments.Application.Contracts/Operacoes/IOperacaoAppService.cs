@@ -14,6 +14,8 @@ public interface IOperacaoAppService : IApplicationService
 
     Task<List<OperacaoDto>> GetListByDataAsync(DateTime dataOperacao);
 
+    Task<ListResultDto<AtivoLookupDto>> GetAtivoLookupAsync();
+
     Task<OperacaoDto> CreateAsync(CreateOperacaoDto input);
 
     Task UpdateAsync(Guid id, UpdateOperacaoDto input);

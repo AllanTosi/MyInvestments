@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MyInvestments.Ativos;
 using MyInvestments.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -36,11 +37,17 @@ public class EfCoreOperacaoRepository
         string filter = null)
     {
         var dbSet = await GetDbSetAsync();
-        return await dbSet
-            .WhereIf(
-                !filter.IsNullOrWhiteSpace(),
-                operacao => operacao.DataOperacao.Equals(filter)
-                )
+        
+        var query = dbSet
+            .Include(a => a.Ativo)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(filter))
+        {
+            query = query.Where(operacao => operacao.DataOperacao.Equals(filter));
+        }
+
+        return await query
             .OrderBy(sorting)
             .Skip(skipCount)
             .Take(maxResultCount)
@@ -54,7 +61,16 @@ public class EfCoreOperacaoRepository
             /*.Where(
                 operacao => operacao.DataOperacao.Equals( dataOperacao)
                 )*/
+            .Include(a => a.Ativo)
             .Where(operacao => operacao.DataOperacao.Date.Equals(dataOperacao))
+            .ToListAsync();
+    }
+
+    public async Task<List<Operacao>> GetListWithRelationshipAsync()
+    {
+        var dbSet = await GetDbSetAsync();
+        return await dbSet
+            .Include(a => a.Ativo)
             .ToListAsync();
     }
 }

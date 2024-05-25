@@ -21,9 +21,10 @@ public class MyInvestmentsApplicationAutoMapperProfile : Profile
         CreateMap<Setor, SetorDto>();
         CreateMap<TipoTransacao, TipoTransacaoDto>();
 
-                    //Adiciona Relacionamento
-                    CreateMap<ClasseAtivo, ClasseAtivoLookupDto>();
-                    CreateMap<Setor, SetorLookupDto>();
+        //Adiciona Relacionamento
+        CreateMap<ClasseAtivo, ClasseAtivoLookupDto>();
+        CreateMap<Setor, SetorLookupDto>();
+        CreateMap<Ativo, AtivoLookupDto>();
 
     }
 }

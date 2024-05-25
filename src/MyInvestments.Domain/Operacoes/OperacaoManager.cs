@@ -17,6 +17,7 @@ public class OperacaoManager : DomainService
     }
 
     public async Task<Operacao> CreateAsync(
+        Guid ativoId,
         DateTime dataOperacao,
         int quantidade,
         float preco,
@@ -24,17 +25,19 @@ public class OperacaoManager : DomainService
         float valorIrpf,
         float? valorCorretagem = 0)
     {
-        Check.NotNull(dataOperacao, nameof(dataOperacao));
-        Check.NotNull(quantidade, nameof(quantidade));
+        //Check.NotNull(dataOperacao, nameof(dataOperacao));
+        //Check.NotNull(quantidade, nameof(quantidade));
+        //Check.NotNull(preco, nameof(preco));
+        //Check.NotNull(valorEmulumento, nameof(valorEmulumento));
+        //Check.NotNull(valorIrpf, nameof(valorIrpf));
+        Check.NotNull(ativoId, nameof(ativoId));
         Check.Positive(quantidade, nameof(quantidade));
-        Check.NotNull(preco, nameof(preco));
         Check.Positive(preco, nameof(preco));
-        Check.NotNull(valorEmulumento, nameof(valorEmulumento));
         Check.Positive(valorEmulumento, nameof(valorEmulumento));
-        Check.NotNull(valorIrpf, nameof(valorIrpf));
         Check.Positive(valorIrpf, nameof(valorIrpf));
 
         return new Operacao(
+            ativoId,
             GuidGenerator.Create(),
             dataOperacao,
             quantidade,

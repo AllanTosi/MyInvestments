@@ -57,16 +57,15 @@ public class EfCoreAtivoRepository
             .ToListAsync();
     }
 
-    public async Task<List<Ativo>> GetListByTickerAsync(string ticker, Guid? userId = null)
+    public async Task<List<Ativo>> GetListByTickerAsync(string ticker)
     {
         var dbSet = await GetDbSetAsync();
-        var q = dbSet.Where(ativo => ativo.Ticker.ToLower().Contains(ticker.ToLower()));
 
-        //Se passou id de usuário significa que tem Role User, e deve filtrar os registros
-        if (userId != null)
-            q = q.Where(x => x.CreatorId == userId);
-
-            return await q.ToListAsync();
+        return await dbSet
+            .Where(ativo => ativo.Ticker.ToLower().Contains(ticker.ToLower()))
+            .Include(a => a.Setor)
+            .Include(b => b.ClasseAtivo)
+            .ToListAsync();
     }
 
     public async Task<List<Ativo>> GetListWithRelationshipAsync()

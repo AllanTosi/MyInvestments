@@ -44,12 +44,27 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
             input.Sorting = nameof(Operacao.DataOperacao);
         }
 
-        var operacoes = await _operacaoRepository.GetListAsync(
+
+        var operacoes = new List<Operacao>();
+        if (CurrentUser.IsInRole("admin"))
+        {
+            operacoes = await _operacaoRepository.GetListAsync(
             input.SkipCount,
             input.MaxResultCount,
             input.Sorting,
             input.Filter
-        );
+            );
+        }
+        else
+        {
+            operacoes = await _operacaoRepository.GetListAsync(
+            input.SkipCount,
+            input.MaxResultCount,
+            input.Sorting,
+            input.Filter,
+            CurrentUser.Id
+            );
+        }
 
         var totalCount = input.Filter == null
             ? await _operacaoRepository.CountAsync()

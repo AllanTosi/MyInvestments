@@ -12,13 +12,14 @@ public interface IOperacaoRepository : IRepository<Operacao, Guid>
 
     Task<List<Operacao>> GetListByDataAsync(DateTime dataOperacao);
 
-    Task<List<Operacao>> GetListWithRelationshipAsync();
+    Task<List<Operacao>> GetListWithRelationshipAsync(Guid? userid = null);
 
     Task<List<Operacao>> GetListAsync(
         int skipCount,
         int maxResultCount,
         string sorting,
-        string filter = null
+        string filter = null,
+        Guid? userid = null
     );
 
 

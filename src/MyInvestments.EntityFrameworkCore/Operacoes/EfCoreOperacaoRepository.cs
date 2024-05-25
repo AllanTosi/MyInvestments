@@ -8,6 +8,7 @@ using MyInvestments.Ativos;
 using MyInvestments.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MyInvestments.Operacoes;
 
@@ -34,7 +35,8 @@ public class EfCoreOperacaoRepository
         int skipCount,
         int maxResultCount,
         string sorting,
-        string filter = null)
+        string filter = null,
+        Guid? userId = null)
     {
         var dbSet = await GetDbSetAsync();
         
@@ -46,6 +48,10 @@ public class EfCoreOperacaoRepository
         {
             query = query.Where(operacao => operacao.DataOperacao.Equals(filter));
         }
+
+        //Se passou id de usuário significa que tem Role User, e deve filtrar os registros
+        if (userId != null)
+            query = query.Where(x => x.CreatorId == userId);
 
         return await query
             .OrderBy(sorting)
@@ -66,11 +72,22 @@ public class EfCoreOperacaoRepository
             .ToListAsync();
     }
 
-    public async Task<List<Operacao>> GetListWithRelationshipAsync()
+    public async Task<List<Operacao>> GetListWithRelationshipAsync(Guid? userId = null)
     {
         var dbSet = await GetDbSetAsync();
-        return await dbSet
+
+        var query = dbSet
             .Include(a => a.Ativo)
-            .ToListAsync();
+            .AsQueryable();
+
+        //Se passou id de usuário significa que tem Role User, e deve filtrar os registros
+        if (userId != null)
+            query = query.Where(x => x.CreatorId == userId);
+
+        return await query.ToListAsync();
+
+/*        return await dbSet
+            .Include(a => a.Ativo)
+            .ToListAsync();*/
     }
 }

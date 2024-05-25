@@ -79,7 +79,7 @@
                 </DataGridColumn>
 
                 <DataGridColumn TItem="OperacaoDto"
-                                Caption="AtivoTicker">
+                                Caption="@L["AtivoTicker"]">
                     <DisplayTemplate>
                         @context.Ativo.Ticker
                     </DisplayTemplate>
@@ -144,7 +144,7 @@
                 <Validations @ref="@CreateValidationsRef" Model="@NewOperacao" ValidateOnLoad="false">
 
                     <Field>
-                        <FieldLabel>@L["Ativo"]</FieldLabel>
+                        <FieldLabel>@L["AtivoTicker"]</FieldLabel>
                         <Select TValue="Guid" @bind-SelectedValue="@NewOperacao.AtivoId">
                             @foreach (var ativo in ativoList)
                             {
@@ -249,7 +249,7 @@
                 <Validations @ref="@EditValidationsRef" Model="@EditingOperacao" ValidateOnLoad="false">
 
                     <Field>
-                        <FieldLabel>@L["Ativo"]</FieldLabel>
+                        <FieldLabel>@L["AtivoTicker"]</FieldLabel>
                         <Select TValue="Guid" @bind-SelectedValue="@EditingOperacao.AtivoId">
                             @foreach (var ativo in ativoList)
                             {

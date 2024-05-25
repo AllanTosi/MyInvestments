@@ -81,7 +81,7 @@ namespace MyInvestments.ExcelExport
             await CheckPolicyAsync(MyInvestmentsPermissions.Operacoes.Default);
 
             //quando fizer os relacionamentos tera que presonalizar igual ao Ativos
-            var lOperacao = await _operacaoRepository.GetListAsync();
+            var lOperacao = await _operacaoRepository.GetListWithRelationshipAsync();
 
             return GenerateExcelFileOperacoes(lOperacao);
         }

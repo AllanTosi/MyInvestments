@@ -355,6 +355,11 @@ namespace MyInvestments.ExcelExport
 
             headerRow.AppendChild(new Cell
             {
+                CellValue = new CellValue("Ticker"),
+                DataType = CellValues.String
+            });
+            headerRow.AppendChild(new Cell
+            {
                 CellValue = new CellValue("DataOperacao"),
                 DataType = CellValues.String
             });
@@ -390,6 +395,12 @@ namespace MyInvestments.ExcelExport
             {
                 var row = new Row();
 
+                row.AppendChild(
+                    new Cell
+                    {
+                        CellValue = new CellValue(item.Ativo.Ticker),
+                        DataType = CellValues.Date
+                    });
                 row.AppendChild(
                     new Cell
                     {

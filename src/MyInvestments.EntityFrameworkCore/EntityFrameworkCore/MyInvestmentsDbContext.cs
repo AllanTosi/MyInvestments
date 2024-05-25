@@ -19,6 +19,7 @@ using MyInvestments.Operacoes;
 using MyInvestments.Setores;
 using MyInvestments.TipoTransacoes;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Volo.Abp.Domain.Entities;
 
 namespace MyInvestments.EntityFrameworkCore;
 
@@ -78,6 +79,7 @@ public class MyInvestmentsDbContext :
 
         /* Include modules to your migration db context */
 
+        //builder.HasDefaultSchema("public");
         builder.ConfigurePermissionManagement();
         builder.ConfigureSettingManagement();
         builder.ConfigureBackgroundJobs();
@@ -135,11 +137,18 @@ public class MyInvestmentsDbContext :
             b.ToTable(MyInvestmentsConsts.DbTablePrefix + "Operacoes",
                 MyInvestmentsConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
-            b.Property(x => x.DataOperacao).IsRequired();
-            b.Property(x => x.Quantidade).IsRequired();
-            b.Property(x => x.Preco).IsRequired();
-            b.Property(x => x.ValorEmulumento).IsRequired();
-            b.Property(x => x.ValorIrpf).IsRequired();
+            b.Property(x => x.DataOperacao);
+            b.Property(x => x.Quantidade);
+            b.Property(x => x.Preco);
+            b.Property(x => x.ValorEmulumento);
+            b.Property(x => x.ValorIrpf);
+
+            // ADD THE MAPPING FOR THE RELATION
+            b
+                .HasOne(a => a.Ativo)
+                .WithMany()
+                .HasForeignKey(a => a.AtivoId)
+                .IsRequired();
         });
 
         builder.Entity<Setor>(b =>

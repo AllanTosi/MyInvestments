@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace MyInvestments.Migrations
 {
     [DbContext(typeof(MyInvestmentsDbContext))]
-    [Migration("20240515135756_InitialCreate")]
+    [Migration("20240525231949_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -171,6 +171,9 @@ namespace MyInvestments.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("AtivoId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .IsRequired()
@@ -232,6 +235,8 @@ namespace MyInvestments.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AtivoId");
 
                     b.ToTable("AppOperacoes", "MyInvestments");
                 });
@@ -2110,6 +2115,17 @@ namespace MyInvestments.Migrations
                     b.Navigation("ClasseAtivo");
 
                     b.Navigation("Setor");
+                });
+
+            modelBuilder.Entity("MyInvestments.Operacoes.Operacao", b =>
+                {
+                    b.HasOne("MyInvestments.Ativos.Ativo", "Ativo")
+                        .WithMany()
+                        .HasForeignKey("AtivoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ativo");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>

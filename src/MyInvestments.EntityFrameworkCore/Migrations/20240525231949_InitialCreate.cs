@@ -417,33 +417,6 @@ namespace MyInvestments.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppOperacoes",
-                schema: "MyInvestments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    DataOperacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Quantidade = table.Column<int>(type: "integer", nullable: false),
-                    Preco = table.Column<float>(type: "real", nullable: false),
-                    ValorEmulumento = table.Column<float>(type: "real", nullable: false),
-                    ValorIrpf = table.Column<float>(type: "real", nullable: false),
-                    ValorCorretagem = table.Column<float>(type: "real", nullable: true),
-                    ExtraProperties = table.Column<string>(type: "text", nullable: false),
-                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppOperacoes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AppSetores",
                 schema: "MyInvestments",
                 columns: table => new
@@ -878,6 +851,41 @@ namespace MyInvestments.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppOperacoes",
+                schema: "MyInvestments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DataOperacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Quantidade = table.Column<int>(type: "integer", nullable: false),
+                    Preco = table.Column<float>(type: "real", nullable: false),
+                    ValorEmulumento = table.Column<float>(type: "real", nullable: false),
+                    ValorIrpf = table.Column<float>(type: "real", nullable: false),
+                    ValorCorretagem = table.Column<float>(type: "real", nullable: true),
+                    AtivoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "text", nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppOperacoes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppOperacoes_AppAtivos_AtivoId",
+                        column: x => x.AtivoId,
+                        principalSchema: "MyInvestments",
+                        principalTable: "AppAtivos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OpenIddictTokens",
                 columns: table => new
                 {
@@ -1148,6 +1156,12 @@ namespace MyInvestments.Migrations
                 column: "Nome");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppOperacoes_AtivoId",
+                schema: "MyInvestments",
+                table: "AppOperacoes",
+                column: "AtivoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AppSetores_Descricao",
                 schema: "MyInvestments",
                 table: "AppSetores",
@@ -1263,10 +1277,6 @@ namespace MyInvestments.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AppAtivos",
-                schema: "MyInvestments");
-
-            migrationBuilder.DropTable(
                 name: "AppOperacoes",
                 schema: "MyInvestments");
 
@@ -1296,11 +1306,7 @@ namespace MyInvestments.Migrations
                 name: "AbpUsers");
 
             migrationBuilder.DropTable(
-                name: "AppClasseAtivos",
-                schema: "MyInvestments");
-
-            migrationBuilder.DropTable(
-                name: "AppSetores",
+                name: "AppAtivos",
                 schema: "MyInvestments");
 
             migrationBuilder.DropTable(
@@ -1308,6 +1314,14 @@ namespace MyInvestments.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "AppClasseAtivos",
+                schema: "MyInvestments");
+
+            migrationBuilder.DropTable(
+                name: "AppSetores",
+                schema: "MyInvestments");
 
             migrationBuilder.DropTable(
                 name: "OpenIddictApplications");

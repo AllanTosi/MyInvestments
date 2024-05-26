@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MyInvestments.Ativos;
 using MyInvestments.ClasseAtivos;
@@ -52,109 +53,116 @@ public class MyInvestmentsDataSeederContributor
 
     public async Task SeedAsync(DataSeedContext context)
     {
-        // ADDED SEED DATA FOR TipoTransacao
+        // Seed TipoTransacao
         if (await _tipoTransacaoRepository.GetCountAsync() <= 0)
         {
-            var compra = await _tipoTransacaoRepository.InsertAsync(
-                await _tipoTransacaoManager.CreateAsync(
-                    "Compra")
-            );
-
-            var venda = await _tipoTransacaoRepository.InsertAsync(
-                await _tipoTransacaoManager.CreateAsync(
-                    "Venda")
-            );
+            await _tipoTransacaoRepository.InsertAsync(await _tipoTransacaoManager.CreateAsync("Compra"));
+            await _tipoTransacaoRepository.InsertAsync(await _tipoTransacaoManager.CreateAsync("Venda"));
         }
 
-        // ADDED SEED DATA FOR ClasseAtivo
+        // Seed ClasseAtivo
         if (await _classeAtivoRepository.GetCountAsync() <= 0)
         {
-            var acao = await _classeAtivoRepository.InsertAsync(
-                await _classeAtivoManager.CreateAsync(
-                    "Ação")
-            );
-
-            var fii = await _classeAtivoRepository.InsertAsync(
-                await _classeAtivoManager.CreateAsync(
-                    "FII")
-            );
-
-            // ADDED SEED DATA FOR Setor
-            if (await _setorRepository.GetCountAsync() <= 0)
-            {
-                var financeiro = await _setorRepository.InsertAsync(
-                    await _setorManager.CreateAsync(
-                        "Financeiro")
-                );
-
-                var logistica = await _setorRepository.InsertAsync(
-                    await _setorManager.CreateAsync(
-                        "Logistica")
-                );
-
-                var eletrico = await _setorRepository.InsertAsync(
-                    await _setorManager.CreateAsync(
-                        "Elétrico")
-                );
-            }
-
-
-            //      Como adicionar os relacionamentos??
-
-            // ADDED SEED DATA FOR Ativo
-            //if (await _ativoRepository.GetCountAsync() <= 0)
-            //{
-            //    await _ativoRepository.InsertAsync(
-            //        await _ativoManager.CreateAsync(
-            //            "HGLG11",
-            //            "CSHG LOGISTICA FII",
-            //            "Melhor FII"
-            //            )
-            //    );
-
-            //    await _ativoRepository.InsertAsync(
-            //        await _ativoManager.CreateAsync(
-            //            "BBAS3",
-            //            "BCO BRASIL S.A.",
-            //            "Primeiro banco do Brasil"
-            //            )
-            //    );
-
-            //    await _ativoRepository.InsertAsync(
-            //        await _ativoManager.CreateAsync(
-            //            "EGIE3",
-            //            "ENGIE BRASIL ENERGIA S.A.",
-            //            "Uma das melhores do setor Elétrico"
-            //            )
-            //    );
-            //}
-
-            // ADDED SEED DATA FOR Operações
-            //if (await _operacaoRepository.GetCountAsync() <= 0)
-            //{
-            //    await _operacaoRepository.InsertAsync(
-            //        await _operacaoManager.CreateAsync(
-            //            new DateTime(2023, 12, 25),
-            //            100,
-            //            42.0f,
-            //            10,
-            //            11,
-            //            5
-            //            )
-            //    );
-
-            //    await _operacaoRepository.InsertAsync(
-            //       await _operacaoManager.CreateAsync(
-            //           new DateTime(2024, 4, 28),
-            //           200,
-            //           45.0f,
-            //           2,
-            //           3,
-            //           1
-            //           )
-            //   );
-            //}
-
+            await _classeAtivoRepository.InsertAsync(await _classeAtivoManager.CreateAsync("Ação"));
+            await _classeAtivoRepository.InsertAsync(await _classeAtivoManager.CreateAsync("FII"));
         }
+
+        // Seed Setor
+        if (await _setorRepository.GetCountAsync() <= 0)
+        {
+            await _setorRepository.InsertAsync(await _setorManager.CreateAsync("Financeiro"));
+            await _setorRepository.InsertAsync(await _setorManager.CreateAsync("Logistica"));
+            await _setorRepository.InsertAsync(await _setorManager.CreateAsync("Elétrico"));
+        }
+
+        // Get existing Setores and ClassesAtivo
+        var setores = await _setorRepository.GetListAsync();
+        var classesAtivo = await _classeAtivoRepository.GetListAsync();
+
+        // Find IDs
+        var logistica = setores.FirstOrDefault(s => s.Descricao == "Logistica")?.Id ?? Guid.Empty;
+        var financeiro = setores.FirstOrDefault(s => s.Descricao == "Financeiro")?.Id ?? Guid.Empty;
+        var eletrico = setores.FirstOrDefault(s => s.Descricao == "Elétrico")?.Id ?? Guid.Empty;
+        var acao = classesAtivo.FirstOrDefault(ca => ca.Nome == "Ação")?.Id ?? Guid.Empty;
+        var fii = classesAtivo.FirstOrDefault(ca => ca.Nome == "FII")?.Id ?? Guid.Empty;
+
+        if (logistica == Guid.Empty || financeiro == Guid.Empty || eletrico == Guid.Empty || acao == Guid.Empty || fii == Guid.Empty)
+        {
+            throw new Exception("One or more related entities were not found.");
+        }
+
+        // Seed Ativo
+        if (await _ativoRepository.GetCountAsync() <= 0)
+        {
+            await _ativoRepository.InsertAsync(
+                await _ativoManager.CreateAsync(
+                    "HGLG11",
+                    "CSHG LOGISTICA FII",
+                    fii,
+                    logistica,
+                    "Melhor FII"
+                )
+            );
+
+            await _ativoRepository.InsertAsync(
+                await _ativoManager.CreateAsync(
+                    "BBAS3",
+                    "BCO BRASIL S.A.",
+                    acao,
+                    financeiro,
+                    "Primeiro banco do Brasil"
+                )
+            );
+
+            await _ativoRepository.InsertAsync(
+                await _ativoManager.CreateAsync(
+                    "EGIE3",
+                    "ENGIE BRASIL ENERGIA S.A.",
+                    acao,
+                    eletrico,
+                    "Uma das melhores do setor Elétrico"
+                )
+            );
+        }
+
+        var ativo = await _ativoRepository.GetListAsync();
+
+        // Find IDs
+        var hglg = ativo.FirstOrDefault(s => s.Ticker == "HGLG11")?.Id ?? Guid.Empty;
+        var egie = ativo.FirstOrDefault(s => s.Ticker == "EGIE3")?.Id ?? Guid.Empty;
+
+        if (hglg == Guid.Empty || egie == Guid.Empty)
+        {
+            throw new Exception("One or more related entities were not found.");
+        }
+
+        // Seed Operações
+        if (await _operacaoRepository.GetCountAsync() <= 0)
+        {
+            await _operacaoRepository.InsertAsync(
+                await _operacaoManager.CreateAsync(
+                    hglg,
+                    new DateTime(2023, 12, 25),
+                    100,
+                    42.0f,
+                    10,
+                    11,
+                    5
+                    )
+            );
+
+            await _operacaoRepository.InsertAsync(
+               await _operacaoManager.CreateAsync(
+                   egie,
+                   new DateTime(2024, 4, 28),
+                   200,
+                   45.0f,
+                   2,
+                   3,
+                   1
+                   )
+           );
+        }
+
     }
 }

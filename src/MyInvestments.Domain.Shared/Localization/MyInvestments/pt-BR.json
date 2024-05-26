@@ -21,6 +21,8 @@
     "Ativos": "Ativos",
     "Ticker": "Ticker",
     "DescriptionAsset": "Descrição",
+    "SetorDescricao": "Setor",
+    "ClasseNome": "Classe",
 
     "Menu:ClasseAtivos": "Classes de Ativos",
     "NewClasseAtivo": "Nova Classe de Ativo",
@@ -32,6 +34,7 @@
     "Menu:Operacoes": "Operações",
     "NewOperacao": "Nova Operação",
     "Operacoes": "Operações",
+    "AtivoTicker": "Ticker Ativo",
     "SearchOperacao": "Buscar Operações por Data",
     "OperationDate": "Data da Operação",
     "Quantity": "Quantidade",

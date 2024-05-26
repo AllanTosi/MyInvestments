@@ -82,28 +82,28 @@
 
                 <DataGridColumn TItem="AtivoDto"
                                 Field="@nameof(AtivoDto.Ticker)"
-                                Caption="Ticker">
+                                Caption="@L["Ticker"]">
                 </DataGridColumn>
 
                 <DataGridColumn TItem="AtivoDto"
                                 Field="@nameof(AtivoDto.Nome)"
-                                Caption="Name">
+                                Caption="@L["Name"]">
                 </DataGridColumn>
 
                 <DataGridColumn TItem="AtivoDto"
                                 Field="@nameof(AtivoDto.Descricao)"
-                                Caption="DescriptionAsset">
+                                Caption="@L["DescriptionAsset"]">
                 </DataGridColumn>
 
                 <DataGridColumn TItem="AtivoDto"
-                                Caption="SetorDescricao">
+                                Caption="@L["SetorDescricao"]">
                                 <DisplayTemplate>
                                     @context.Setor.Descricao
                                 </DisplayTemplate>
                 </DataGridColumn>
 
                 <DataGridColumn TItem="AtivoDto"
-                                Caption="ClasseNome">
+                                Caption="@L["ClasseNome"]">
                                 <DisplayTemplate>
                                     @context.ClasseAtivo.Nome
                                 </DisplayTemplate>

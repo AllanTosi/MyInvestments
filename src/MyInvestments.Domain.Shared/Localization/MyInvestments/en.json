@@ -77,29 +77,29 @@
 
     //Permission menus
     "Permission:MyInvestments": "My Investments",
-    "Permission:Ativos": "Ativos Management",
-    "Permission:Ativos.Create": "Creating new Ativo",
-    "Permission:Ativos.Edit": "Editing the Ativo",
-    "Permission:Ativos.Delete": "Deleting the Ativo",
+    "Permission:Ativos": "Assets Management",
+    "Permission:Ativos.Create": "Create Asset",
+    "Permission:Ativos.Edit": "Edit Asset",
+    "Permission:Ativos.Delete": "Delete the Asset",
 
-    "Permission:ClasseAtivos": "Classe Ativos Management",
-    "Permission:ClasseAtivos.Create": "Creating new Classe Ativo",
-    "Permission:ClasseAtivos.Edit": "Editing the Classe Ativo",
-    "Permission:ClasseAtivos.Delete": "Deleting the Classe Ativo",
+    "Permission:ClasseAtivos": "Asset Classes Management",
+    "Permission:ClasseAtivos.Create": "Create new Asset Classes",
+    "Permission:ClasseAtivos.Edit": "Edit Asset Classes",
+    "Permission:ClasseAtivos.Delete": "Delete Asset Classes",
 
-    "Permission:Operacoes": "Operações Management",
-    "Permission:Operacoes.Create": "Creating new Operação",
-    "Permission:Operacoes.Edit": "Editing the Operação",
-    "Permission:Operacoes.Delete": "Deleting the Operação",
+    "Permission:Operacoes": "Operations Management",
+    "Permission:Operacoes.Create": "Create new Operation",
+    "Permission:Operacoes.Edit": "Edit Operation",
+    "Permission:Operacoes.Delete": "Delete Operation",
 
-    "Permission:Setores": "Setores Management",
-    "Permission:Setores.Create": "Creating new Setor",
-    "Permission:Setores.Edit": "Editing the Setor",
-    "Permission:Setores.Delete": "Deleting the Setor",
+    "Permission:Setores": "Sectors Management",
+    "Permission:Setores.Create": "Create new Sector",
+    "Permission:Setores.Edit": "Edit Sector",
+    "Permission:Setores.Delete": "Delete Sector",
 
-    "Permission:TipoTransacoes": "Transação Management",
-    "Permission:TipoTransacoes.Create": "Creating new Transação",
-    "Permission:TipoTransacoes.Edit": "Editing the Transação",
-    "Permission:TipoTransacoes.Delete": "Deleting the Transação"
+    "Permission:TipoTransacoes": "Transaction Types Management",
+    "Permission:TipoTransacoes.Create": "Create new Transaction Type",
+    "Permission:TipoTransacoes.Edit": "Edit Transaction Type",
+    "Permission:TipoTransacoes.Delete": "Delete Transaction Type"
   }
 }

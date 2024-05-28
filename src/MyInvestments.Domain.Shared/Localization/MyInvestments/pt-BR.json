@@ -76,28 +76,28 @@
     //Permission menus
     "Permission:MyInvestments": "Meus Investimentos",
     "Permission:Ativos": "Gerenciamento de Ativos",
-    "Permission:Ativos.Create": "Criando novo Ativo",
-    "Permission:Ativos.Edit": "Editando o Ativo",
-    "Permission:Ativos.Delete": "Excluindo o Ativo",
+    "Permission:Ativos.Create": "Criar novo Ativo",
+    "Permission:Ativos.Edit": "Editar Ativo",
+    "Permission:Ativos.Delete": "Excluir Ativo",
 
     "Permission:ClasseAtivos": "Gerenciamento de Classes de Ativos",
-    "Permission:ClasseAtivos.Create": "Criando nova Classe de Ativo",
-    "Permission:ClasseAtivos.Edit": "Editando a Classe de Ativo",
-    "Permission:ClasseAtivos.Delete": "Excluindo a Classe de Ativo",
+    "Permission:ClasseAtivos.Create": "Criar nova Classe de Ativo",
+    "Permission:ClasseAtivos.Edit": "Editar Classe de Ativo",
+    "Permission:ClasseAtivos.Delete": "Excluir Classe de Ativo",
 
     "Permission:Operacoes": "Gerenciamento de Operações",
-    "Permission:Operacoes.Create": "Criando nova Operação",
-    "Permission:Operacoes.Edit": "Editando a Operação",
-    "Permission:Operacoes.Delete": "Excluindo a Operação",
+    "Permission:Operacoes.Create": "Criar nova Operação",
+    "Permission:Operacoes.Edit": "Editar Operação",
+    "Permission:Operacoes.Delete": "Excluir Operação",
 
     "Permission:Setores": "Gerenciamento de Setores",
-    "Permission:Setores.Create": "Criando novo Setor",
-    "Permission:Setores.Edit": "Editando o Setor",
-    "Permission:Setores.Delete": "Excluindo o Setor",
+    "Permission:Setores.Create": "Criar novo Setor",
+    "Permission:Setores.Edit": "Editar Setor",
+    "Permission:Setores.Delete": "Excluir Setor",
 
     "Permission:TipoTransacoes": "Gerenciamento de Transações",
-    "Permission:TipoTransacoes.Create": "Criando nova Transação",
-    "Permission:TipoTransacoes.Edit": "Editando a Transação",
-    "Permission:TipoTransacoes.Delete": "Excluindo a Transação"
+    "Permission:TipoTransacoes.Create": "Criar nova Transação",
+    "Permission:TipoTransacoes.Edit": "Editar Transação",
+    "Permission:TipoTransacoes.Delete": "Excluir Transação"
   }
 }

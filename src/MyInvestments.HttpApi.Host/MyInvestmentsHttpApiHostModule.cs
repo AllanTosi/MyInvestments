@@ -129,11 +129,11 @@ public class MyInvestmentsHttpApiHostModule : AbpModule
         ConfigureSwaggerServices(context, configuration);
 
         //Para exibir erros genéricos
-        context.Services.Configure<AbpExceptionHandlingOptions>(options =>
-        {
-            options.SendExceptionsDetailsToClients = true;
-            options.SendStackTraceToClients = true;
-        });
+        //context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+        //{
+        //    options.SendExceptionsDetailsToClients = true;
+        //    options.SendStackTraceToClients = true;
+        //});
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)

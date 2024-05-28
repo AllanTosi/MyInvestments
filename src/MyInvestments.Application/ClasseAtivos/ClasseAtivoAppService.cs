@@ -9,7 +9,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace MyInvestments.ClasseAtivos;
 
-//[Authorize(MyInvestmentsPermissions.ClasseAtivos.Default)]
+[Authorize(MyInvestmentsPermissions.ClasseAtivos.Default)]
 public class ClasseAtivoAppService : MyInvestmentsAppService, IClasseAtivoAppService
 {
     private readonly IClasseAtivoRepository _classeAtivoRepository;
@@ -55,7 +55,7 @@ public class ClasseAtivoAppService : MyInvestmentsAppService, IClasseAtivoAppSer
         );
     }
 
-    //[Authorize(MyInvestmentsPermissions.ClasseAtivos.Create)]
+    [Authorize(MyInvestmentsPermissions.ClasseAtivos.Create)]
     public async Task<ClasseAtivoDto> CreateAsync(CreateClasseAtivoDto input)
     {
         var classeAtivo = await _classeAtivoManager.CreateAsync(
@@ -67,7 +67,7 @@ public class ClasseAtivoAppService : MyInvestmentsAppService, IClasseAtivoAppSer
         return ObjectMapper.Map<ClasseAtivo, ClasseAtivoDto>(classeAtivo);
     }
 
-    //[Authorize(MyInvestmentsPermissions.ClasseAtivos.Edit)]
+    [Authorize(MyInvestmentsPermissions.ClasseAtivos.Edit)]
     public async Task UpdateAsync(Guid id, UpdateClasseAtivoDto input)
     {
         var classeAtivo = await _classeAtivoRepository.GetAsync(id);
@@ -80,7 +80,7 @@ public class ClasseAtivoAppService : MyInvestmentsAppService, IClasseAtivoAppSer
         await _classeAtivoRepository.UpdateAsync(classeAtivo);
     }
 
-    //[Authorize(MyInvestmentsPermissions.ClasseAtivos.Delete)]
+    [Authorize(MyInvestmentsPermissions.ClasseAtivos.Delete)]
     public async Task DeleteAsync(Guid id)
     {
         await _classeAtivoRepository.DeleteAsync(id);

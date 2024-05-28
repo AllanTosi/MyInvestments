@@ -130,7 +130,7 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         await _ativoRepository.DeleteAsync(id);
     }
 
-    //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
+    [Authorize(MyInvestmentsPermissions.Ativos.Default)]
     public async Task<List<AtivoDto>> GetListByTickerAsync(string ticker)
     {
         var ativos = await _ativoRepository.GetListByTickerAsync(ticker);
@@ -148,7 +148,7 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         return listAtivoDto;
     }
 
-    //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
+    [Authorize(MyInvestmentsPermissions.Ativos.Default)]
     public async Task<ListResultDto<SetorLookupDto>> GetSetorLookupAsync()
     {
         var setores = await _setorRepository.GetListAsync();
@@ -158,7 +158,7 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         );
     }
 
-    //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
+    [Authorize(MyInvestmentsPermissions.Ativos.Default)]
     public async Task<ListResultDto<ClasseAtivoLookupDto>> GetClasseAtivoLookupAsync()
     {
         var classeAtivos = await _classeAtivoRepository.GetListAsync();
@@ -168,7 +168,7 @@ public class AtivoAppService : MyInvestmentsAppService, IAtivoAppService
         );
     }
 
-    //[Authorize(MyInvestmentsPermissions.Ativos.Default)]
+    [Authorize(MyInvestmentsPermissions.Ativos.Default)]
     public async Task<List<AtivoDto>> GetListAllAtivoAsync()
     {
         var ativos = await _ativoRepository.GetListWithRelationshipAsync();

@@ -11,7 +11,7 @@ using MyInvestments.Setores;
 
 namespace MyInvestments.Operacoes;
 
-//[Authorize(MyInvestmentsPermissions.Operacoes.Default)]
+[Authorize(MyInvestmentsPermissions.Operacoes.Default)]
 public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
 {
     private readonly IOperacaoRepository _operacaoRepository;
@@ -86,7 +86,7 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
         );
     }
 
-    //[Authorize(MyInvestmentsPermissions.Operacoes.Create)]
+    [Authorize(MyInvestmentsPermissions.Operacoes.Create)]
     public async Task<OperacaoDto> CreateAsync(CreateOperacaoDto input)
     {
         var operacao = await _operacaoManager.CreateAsync(
@@ -106,7 +106,7 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
         return ObjectMapper.Map<Operacao, OperacaoDto>(operacao);
     }
 
-    //[Authorize(MyInvestmentsPermissions.Operacoes.Edit)]
+    [Authorize(MyInvestmentsPermissions.Operacoes.Edit)]
     public async Task UpdateAsync(Guid id, UpdateOperacaoDto input)
     {
         var operacao = await _operacaoRepository.GetAsync(id);
@@ -123,7 +123,7 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
         await _operacaoRepository.UpdateAsync(operacao);
     }
 
-    //[Authorize(MyInvestmentsPermissions.Operacoes.Delete)]
+    [Authorize(MyInvestmentsPermissions.Operacoes.Delete)]
     public async Task DeleteAsync(Guid id)
     {
         await _operacaoRepository.DeleteAsync(id);

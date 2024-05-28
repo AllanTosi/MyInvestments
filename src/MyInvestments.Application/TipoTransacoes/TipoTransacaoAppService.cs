@@ -9,7 +9,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace MyInvestments.TipoTransacoes;
 
-//[Authorize(MyInvestmentsPermissions.TipoTransacoes.Default)]
+[Authorize(MyInvestmentsPermissions.TipoTransacoes.Default)]
 public class TipoTransacaoAppService : MyInvestmentsAppService, ITipoTransacaoAppService
 {
     private readonly ITipoTransacaoRepository _tipoTransacaoRepository;
@@ -55,7 +55,7 @@ public class TipoTransacaoAppService : MyInvestmentsAppService, ITipoTransacaoAp
         );
     }
 
-    //[Authorize(MyInvestmentsPermissions.TipoTransacoes.Create)]
+    [Authorize(MyInvestmentsPermissions.TipoTransacoes.Create)]
     public async Task<TipoTransacaoDto> CreateAsync(CreateTipoTransacaoDto input)
     {
         var tipoTransacao = await _tipoTransacaoManager.CreateAsync(
@@ -67,7 +67,7 @@ public class TipoTransacaoAppService : MyInvestmentsAppService, ITipoTransacaoAp
         return ObjectMapper.Map<TipoTransacao, TipoTransacaoDto>(tipoTransacao);
     }
 
-    //[Authorize(MyInvestmentsPermissions.TipoTransacoes.Edit)]
+    [Authorize(MyInvestmentsPermissions.TipoTransacoes.Edit)]
     public async Task UpdateAsync(Guid id, UpdateTipoTransacaoDto input)
     {
         var tipoTransacao = await _tipoTransacaoRepository.GetAsync(id);
@@ -80,13 +80,13 @@ public class TipoTransacaoAppService : MyInvestmentsAppService, ITipoTransacaoAp
         await _tipoTransacaoRepository.UpdateAsync(tipoTransacao);
     }
 
-    //[Authorize(MyInvestmentsPermissions.TipoTransacoes.Delete)]
+    [Authorize(MyInvestmentsPermissions.TipoTransacoes.Delete)]
     public async Task DeleteAsync(Guid id)
     {
         await _tipoTransacaoRepository.DeleteAsync(id);
     }
 
-    //[Authorize(MyInvestmentsPermissions.TipoTransacoes.Default)]
+    [Authorize(MyInvestmentsPermissions.TipoTransacoes.Default)]
     public async Task<List<TipoTransacaoDto>> GetListByDescricaoAsync(string descricao)
     {
         var tipoTransacoes = await _tipoTransacaoRepository.GetListByDescricaoAsync(descricao);

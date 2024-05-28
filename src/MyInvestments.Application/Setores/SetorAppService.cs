@@ -9,7 +9,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace MyInvestments.Setores;
 
-//[Authorize(MyInvestmentsPermissions.Setores.Default)]
+[Authorize(MyInvestmentsPermissions.Setores.Default)]
 public class SetorAppService : MyInvestmentsAppService, ISetorAppService
 {
     private readonly ISetorRepository _setorRepository;
@@ -55,7 +55,7 @@ public class SetorAppService : MyInvestmentsAppService, ISetorAppService
         );
     }
 
-    //[Authorize(MyInvestmentsPermissions.Setores.Create)]
+    [Authorize(MyInvestmentsPermissions.Setores.Create)]
     public async Task<SetorDto> CreateAsync(CreateSetorDto input)
     {
         var setor = await _setorManager.CreateAsync(
@@ -67,7 +67,7 @@ public class SetorAppService : MyInvestmentsAppService, ISetorAppService
         return ObjectMapper.Map<Setor, SetorDto>(setor);
     }
 
-    //[Authorize(MyInvestmentsPermissions.Setores.Edit)]
+    [Authorize(MyInvestmentsPermissions.Setores.Edit)]
     public async Task UpdateAsync(Guid id, UpdateSetorDto input)
     {
         var setor = await _setorRepository.GetAsync(id);
@@ -80,13 +80,13 @@ public class SetorAppService : MyInvestmentsAppService, ISetorAppService
         await _setorRepository.UpdateAsync(setor);
     }
 
-    //[Authorize(MyInvestmentsPermissions.Setores.Delete)]
+    [Authorize(MyInvestmentsPermissions.Setores.Delete)]
     public async Task DeleteAsync(Guid id)
     {
         await _setorRepository.DeleteAsync(id);
     }
 
-    //[Authorize(MyInvestmentsPermissions.Setores.Default)]
+    [Authorize(MyInvestmentsPermissions.Setores.Default)]
     public async Task<List<SetorDto>> GetListByDescricaoAsync(string descricao)
     {
         var setores = await _setorRepository.GetListByDescricaoAsync(descricao);

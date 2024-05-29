@@ -399,7 +399,7 @@ namespace MyInvestments.ExcelExport
                     new Cell
                     {
                         CellValue = new CellValue(item.Ativo.Ticker),
-                        DataType = CellValues.Date
+                        DataType = CellValues.String
                     });
                 row.AppendChild(
                     new Cell

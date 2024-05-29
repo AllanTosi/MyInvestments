@@ -103,7 +103,7 @@ public partial class Operacoes
 
         NewOperacao = new CreateOperacaoDto();
         CreateOperacaoModal.Show();
-        NewOperacao.AtivoId = OperacaoList.First().Id;
+        //NewOperacao.AtivoId = ativoList.First().Id;
     }
 
     private void CloseCreateOperacaoModal()

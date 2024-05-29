@@ -10,7 +10,7 @@ public interface IOperacaoRepository : IRepository<Operacao, Guid>
 {
     Task<Operacao> FindByDataOperacaoAsync(DateTime dataOperacao);
 
-    Task<List<Operacao>> GetListByDataAsync(DateTime dataOperacao);
+    Task<List<Operacao>> GetListByDataAsync(DateTime dataOperacao, Guid? userId = null);
 
     Task<List<Operacao>> GetListWithRelationshipAsync(Guid? userid = null);
 

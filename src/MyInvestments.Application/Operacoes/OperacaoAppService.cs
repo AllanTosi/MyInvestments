@@ -131,7 +131,21 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
 
     public async Task<List<OperacaoDto>> GetListByDataAsync(DateTime dataOperacao)
     {
-        var operacoes = await _operacaoRepository.GetListByDataAsync(dataOperacao);
+        var operacoes = new List<Operacao>();
+        if (CurrentUser.IsInRole("admin"))
+        {
+            operacoes = await _operacaoRepository.GetListByDataAsync(
+                dataOperacao
+            );
+        }
+        else
+        {
+            operacoes = await _operacaoRepository.GetListByDataAsync(
+                dataOperacao,
+                CurrentUser.Id
+            );
+        }
+        
         return ObjectMapper.Map<List<Operacao>, List<OperacaoDto>>(operacoes);
     }
 

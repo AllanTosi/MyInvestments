@@ -60,15 +60,20 @@ public class EfCoreOperacaoRepository
             .ToListAsync();
     }
 
-    public async Task<List<Operacao>> GetListByDataAsync(DateTime dataOperacao)
+    public async Task<List<Operacao>> GetListByDataAsync(DateTime dataOperacao, Guid? userId = null)
     {
         var dbSet = await GetDbSetAsync();
-        return await dbSet
-            /*.Where(
-                operacao => operacao.DataOperacao.Equals( dataOperacao)
-                )*/
+
+        var query = dbSet
             .Include(a => a.Ativo)
             .Where(operacao => operacao.DataOperacao.Date.Equals(dataOperacao.Date))
+            .AsQueryable();
+
+        //Se passou id de usuário significa que tem Role User, e deve filtrar os registros
+        if (userId != null)
+            query = query.Where(x => x.CreatorId == userId);
+
+        return await query
             .ToListAsync();
     }
 

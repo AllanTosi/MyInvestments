@@ -68,7 +68,7 @@ public class EfCoreOperacaoRepository
                 operacao => operacao.DataOperacao.Equals( dataOperacao)
                 )*/
             .Include(a => a.Ativo)
-            .Where(operacao => operacao.DataOperacao.Date.Equals(dataOperacao))
+            .Where(operacao => operacao.DataOperacao.Date.Equals(dataOperacao.Date))
             .ToListAsync();
     }
 

@@ -143,17 +143,20 @@
             <ModalBody>
                 <Validations @ref="@CreateValidationsRef" Model="@NewOperacao" ValidateOnLoad="false">
 
-                    <Field>
-                        <FieldLabel>@L["AtivoTicker"]</FieldLabel>
-                        <Select TValue="Guid" @bind-SelectedValue="@NewOperacao.AtivoId">
-                            @foreach (var ativo in ativoList)
-                            {
-                                <SelectItem TValue="Guid" Value="@ativo.Id">
-                                    @ativo.Ticker
-                                </SelectItem>
-                            }
-                        </Select>
-                    </Field>
+                    @if(ativoList != null)
+                    {                    
+                        <Field>
+                            <FieldLabel>@L["AtivoTicker"]</FieldLabel>
+                            <Select TValue="Guid" @bind-SelectedValue="@NewOperacao.AtivoId">
+                                @foreach (var ativo in ativoList)
+                                {
+                                    <SelectItem TValue="Guid" Value="@ativo.Id">
+                                        @ativo.Ticker
+                                    </SelectItem>
+                                }
+                            </Select>
+                        </Field>
+                    }
 
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>

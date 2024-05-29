@@ -165,7 +165,7 @@ public partial class Operacoes
     {
         //if (await validationsRef.ValidateAll())
         //{
-            var result = await OperacaoAppService.GetListByDataAsync(SearchOperacao);
+            var result = await OperacaoAppService.GetListByDataAsync(SearchOperacao.Date);
             OperacaoList = result;
             TotalCount = (int)result.Count;
         //}

@@ -103,7 +103,7 @@ public partial class Operacoes
 
         NewOperacao = new CreateOperacaoDto();
         CreateOperacaoModal.Show();
-        //NewOperacao.AtivoId = ativoList.First().Id;
+        NewOperacao.AtivoId = ativoList.First().Id;
     }
 
     private void CloseCreateOperacaoModal()
@@ -177,5 +177,12 @@ public partial class Operacoes
         var excelBytes = await ExportToExcelAppService.ExportToExcelOperacoes();
         await JsRuntime.InvokeVoidAsync("saveAsFile", $"Operacoes_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx",
             Convert.ToBase64String(excelBytes));
+    }
+
+    void ValidateField(ValidatorEventArgs e)
+    {
+        var field = Convert.ToDouble(e.Value);
+
+        e.Status = field > 0 ? ValidationStatus.Success : ValidationStatus.Error;
     }
 }

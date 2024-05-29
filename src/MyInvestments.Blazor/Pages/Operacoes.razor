@@ -169,7 +169,7 @@
                         </Field>
                     </Validation>
 
-                    <Validation MessageLocalizer="@LH.Localize">
+                    <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Quantity"]</FieldLabel>
                             <NumericEdit TValue="int" @bind-Value="@NewOperacao.Quantidade" Type="number">
@@ -180,10 +180,10 @@
                         </Field>
                     </Validation>
 
-                    <Validation MessageLocalizer="@LH.Localize">
+                    <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Price"]</FieldLabel>
-                            <NumericEdit TValue="float" @bind-Value="@NewOperacao.Preco" Type="number" >
+                            <NumericEdit TValue="float" @bind-Value="@NewOperacao.Preco" Type="number">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -191,7 +191,7 @@
                         </Field>
                     </Validation>
 
-                    <Validation MessageLocalizer="@LH.Localize">
+                    <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["EmolumentValue"]</FieldLabel>
                             <NumericEdit TValue="float" @bind-Value="@NewOperacao.ValorEmulumento" Type="number">
@@ -202,7 +202,7 @@
                         </Field>
                     </Validation>
 
-                    <Validation MessageLocalizer="@LH.Localize">
+                    <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["IRPFValue"]</FieldLabel>
                             <NumericEdit TValue="float" @bind-Value="@NewOperacao.ValorIrpf" Type="number">
@@ -277,7 +277,7 @@
                         </Field>
                     </Validation>
 
-                    <Validation MessageLocalizer="@LH.Localize">
+                    <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Quantity"]</FieldLabel>
                             <NumericEdit TValue="int" @bind-Value="@EditingOperacao.Quantidade" Type="number">
@@ -288,7 +288,7 @@
                         </Field>
                     </Validation>
 
-                    <Validation MessageLocalizer="@LH.Localize">
+                    <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Price"]</FieldLabel>
                             <NumericEdit TValue="float" @bind-Value="@EditingOperacao.Preco" Type="number">
@@ -299,7 +299,7 @@
                         </Field>
                     </Validation>
 
-                    <Validation MessageLocalizer="@LH.Localize">
+                    <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["EmolumentValue"]</FieldLabel>
                             <NumericEdit TValue="float" @bind-Value="@EditingOperacao.ValorEmulumento" Type="number">
@@ -310,7 +310,7 @@
                         </Field>
                     </Validation>
 
-                    <Validation MessageLocalizer="@LH.Localize">
+                    <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["IRPFValue"]</FieldLabel>
                             <NumericEdit TValue="float" @bind-Value="@EditingOperacao.ValorIrpf" Type="number">

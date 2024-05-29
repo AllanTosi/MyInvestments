@@ -40,7 +40,7 @@ public partial class Operacoes
     private Validations EditValidationsRef;
 
     private Validations validationsRef;
-    private DateTime SearchOperacao { get; set; }
+    private DateTime SearchOperacao { get; set; } = DateTime.Today;
 
     IReadOnlyList<AtivoLookupDto> ativoList = Array.Empty<AtivoLookupDto>();
 
@@ -163,14 +163,14 @@ public partial class Operacoes
 
     private async Task Search()
     {
-        if (await validationsRef.ValidateAll())
-        {
+        //if (await validationsRef.ValidateAll())
+        //{
             var result = await OperacaoAppService.GetListByDataAsync(SearchOperacao);
             OperacaoList = result;
             TotalCount = (int)result.Count;
-        }
+        //}
 
-        //GetOperacoesAsync();
+        GetOperacoesAsync();
     }
     private async Task ExportToExcel()
     {

@@ -18,6 +18,7 @@ public class OperacaoManager : DomainService
 
     public async Task<Operacao> CreateAsync(
         Guid ativoId,
+        Guid tipoTransacaoId,
         DateTime dataOperacao,
         int quantidade,
         float preco,
@@ -31,6 +32,7 @@ public class OperacaoManager : DomainService
         //Check.NotNull(valorEmulumento, nameof(valorEmulumento));
         //Check.NotNull(valorIrpf, nameof(valorIrpf));
         Check.NotNull(ativoId, nameof(ativoId));
+        Check.NotNull(tipoTransacaoId, nameof(tipoTransacaoId));
         Check.Positive(quantidade, nameof(quantidade));
         Check.Positive(preco, nameof(preco));
         Check.Positive(valorEmulumento, nameof(valorEmulumento));
@@ -38,6 +40,7 @@ public class OperacaoManager : DomainService
 
         return new Operacao(
             ativoId,
+            tipoTransacaoId,
             GuidGenerator.Create(),
             dataOperacao,
             quantidade,

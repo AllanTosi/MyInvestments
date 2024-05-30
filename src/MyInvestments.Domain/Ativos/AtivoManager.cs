@@ -35,7 +35,7 @@ public class AtivoManager : DomainService
 
         return new Ativo(
             GuidGenerator.Create(),
-            ticker,
+            ticker.ToUpper(),
             nome,
             setorId,
             classeAtivoId,

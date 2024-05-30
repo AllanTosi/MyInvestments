@@ -24,13 +24,13 @@ public class EfCoreAtivoRepository
     public async Task<Ativo> FindByTickerAsync(string ticker)
     {
         var dbSet = await GetDbSetAsync();
-        return await dbSet.FirstOrDefaultAsync(ativo => ativo.Ticker == ticker);
+        return await dbSet.FirstOrDefaultAsync(ativo => ativo.Ticker.ToUpper() == ticker.ToUpper());
     }
 
     public async Task<Ativo> FindByNomeAsync(string nome)
     {
         var dbSet = await GetDbSetAsync();
-        return await dbSet.FirstOrDefaultAsync(ativo => ativo.Nome == nome);
+        return await dbSet.FirstOrDefaultAsync(ativo => ativo.Nome.ToLower() == nome.ToLower());
     }
     public async Task<List<Ativo>> GetListAsync(
        int skipCount,
@@ -62,7 +62,7 @@ public class EfCoreAtivoRepository
         var dbSet = await GetDbSetAsync();
 
         return await dbSet
-            .Where(ativo => ativo.Ticker.ToLower().Contains(ticker.ToLower()))
+            .Where(ativo => ativo.Ticker.ToUpper().Contains(ticker.ToUpper()))
             .Include(a => a.Setor)
             .Include(b => b.ClasseAtivo)
             .ToListAsync();

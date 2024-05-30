@@ -16,4 +16,6 @@ public class CreateOperacaoDto
     //Adiciona referencias
     [Required]
     public Guid AtivoId { get; set; }
+    [Required]
+    public Guid TipoTransacaoId { get; set;}
 }

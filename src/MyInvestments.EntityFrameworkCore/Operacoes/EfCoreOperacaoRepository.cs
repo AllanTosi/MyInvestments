@@ -42,6 +42,7 @@ public class EfCoreOperacaoRepository
         
         var query = dbSet
             .Include(a => a.Ativo)
+            .Include(b => b.TipoTransacao)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(filter))
@@ -66,6 +67,7 @@ public class EfCoreOperacaoRepository
 
         var query = dbSet
             .Include(a => a.Ativo)
+            .Include(b => b.TipoTransacao)
             .Where(operacao => operacao.DataOperacao.Date.Equals(dataOperacao.Date))
             .AsQueryable();
 
@@ -83,6 +85,7 @@ public class EfCoreOperacaoRepository
 
         var query = dbSet
             .Include(a => a.Ativo)
+            .Include(b => b.TipoTransacao)
             .AsQueryable();
 
         //Se passou id de usuário significa que tem Role User, e deve filtrar os registros

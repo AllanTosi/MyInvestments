@@ -39,6 +39,7 @@
             </Column>
             <Column>
                 <Button Color="Color.Primary" Clicked="@Search">@L["Search"]</Button>
+                <Button Color="Color.Light" Clicked="@GetOperacoesAsync">@L["Clean"]</Button>
             </Column>
         </Row>
     </CardHeader>
@@ -91,6 +92,13 @@
                                 Caption="@L["OperationDate"]">
                     <DisplayTemplate>
                         @context.DataOperacao.ToShortDateString()
+                    </DisplayTemplate>
+                </DataGridColumn>
+
+                <DataGridColumn TItem="OperacaoDto"
+                                Caption="@L["TipoTransacao"]">
+                    <DisplayTemplate>
+                        @context.TipoTransacao.Descricao
                     </DisplayTemplate>
                 </DataGridColumn>
 
@@ -169,6 +177,21 @@
                             </DateEdit>
                         </Field>
                     </Validation>
+
+                    @if (tipoTransacaoList != null)
+                    {
+                        <Field>
+                            <FieldLabel>@L["TipoTransacao"]</FieldLabel>
+                            <Select TValue="Guid" @bind-SelectedValue="@NewOperacao.TipoTransacaoId">
+                                @foreach (var tipoTransacao in tipoTransacaoList)
+                                {
+                                    <SelectItem TValue="Guid" Value="@tipoTransacao.Id">
+                                        @tipoTransacao.Descricao
+                                    </SelectItem>
+                                }
+                            </Select>
+                        </Field>
+                    }
 
                     <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>
@@ -277,6 +300,21 @@
                             </DateEdit>
                         </Field>
                     </Validation>
+
+                    @if (tipoTransacaoList != null)
+                    {
+                        <Field>
+                            <FieldLabel>@L["TipoTransacao"]</FieldLabel>
+                            <Select TValue="Guid" @bind-SelectedValue="@EditingOperacao.TipoTransacaoId">
+                                @foreach (var tipoTransacao in tipoTransacaoList)
+                                {
+                                    <SelectItem TValue="Guid" Value="@tipoTransacao.Id">
+                                        @tipoTransacao.Descricao
+                                    </SelectItem>
+                                }
+                            </Select>
+                        </Field>
+                    }
 
                     <Validation Validator="ValidateField" MessageLocalizer="@LH.Localize">
                         <Field>

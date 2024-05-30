@@ -222,6 +222,9 @@ namespace MyInvestments.Migrations
                     b.Property<int>("Quantidade")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("TipoTransacaoId")
+                        .HasColumnType("uuid");
+
                     b.Property<float?>("ValorCorretagem")
                         .HasColumnType("real");
 
@@ -234,6 +237,8 @@ namespace MyInvestments.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AtivoId");
+
+                    b.HasIndex("TipoTransacaoId");
 
                     b.ToTable("AppOperacoes", "MyInvestments");
                 });
@@ -2122,7 +2127,15 @@ namespace MyInvestments.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MyInvestments.TipoTransacoes.TipoTransacao", "TipoTransacao")
+                        .WithMany()
+                        .HasForeignKey("TipoTransacaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Ativo");
+
+                    b.Navigation("TipoTransacao");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>

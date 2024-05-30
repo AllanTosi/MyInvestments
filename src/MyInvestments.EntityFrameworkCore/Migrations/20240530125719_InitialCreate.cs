@@ -863,6 +863,7 @@ namespace MyInvestments.Migrations
                     ValorIrpf = table.Column<float>(type: "real", nullable: false),
                     ValorCorretagem = table.Column<float>(type: "real", nullable: true),
                     AtivoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TipoTransacaoId = table.Column<Guid>(type: "uuid", nullable: false),
                     ExtraProperties = table.Column<string>(type: "text", nullable: false),
                     ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -881,6 +882,13 @@ namespace MyInvestments.Migrations
                         column: x => x.AtivoId,
                         principalSchema: "MyInvestments",
                         principalTable: "AppAtivos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppOperacoes_AppTipoTransacoes_TipoTransacaoId",
+                        column: x => x.TipoTransacaoId,
+                        principalSchema: "MyInvestments",
+                        principalTable: "AppTipoTransacoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1162,6 +1170,12 @@ namespace MyInvestments.Migrations
                 column: "AtivoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppOperacoes_TipoTransacaoId",
+                schema: "MyInvestments",
+                table: "AppOperacoes",
+                column: "TipoTransacaoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AppSetores_Descricao",
                 schema: "MyInvestments",
                 table: "AppSetores",
@@ -1281,10 +1295,6 @@ namespace MyInvestments.Migrations
                 schema: "MyInvestments");
 
             migrationBuilder.DropTable(
-                name: "AppTipoTransacoes",
-                schema: "MyInvestments");
-
-            migrationBuilder.DropTable(
                 name: "OpenIddictScopes");
 
             migrationBuilder.DropTable(
@@ -1307,6 +1317,10 @@ namespace MyInvestments.Migrations
 
             migrationBuilder.DropTable(
                 name: "AppAtivos",
+                schema: "MyInvestments");
+
+            migrationBuilder.DropTable(
+                name: "AppTipoTransacoes",
                 schema: "MyInvestments");
 
             migrationBuilder.DropTable(

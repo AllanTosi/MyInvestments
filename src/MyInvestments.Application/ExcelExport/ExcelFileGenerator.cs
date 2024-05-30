@@ -365,6 +365,11 @@ namespace MyInvestments.ExcelExport
             });
             headerRow.AppendChild(new Cell
             {
+                CellValue = new CellValue("TipoTransacao"),
+                DataType = CellValues.String
+            });
+            headerRow.AppendChild(new Cell
+            {
                 CellValue = new CellValue("Quantidade"),
                 DataType = CellValues.String
             });
@@ -406,6 +411,12 @@ namespace MyInvestments.ExcelExport
                     {
                         CellValue = new CellValue(item.DataOperacao),
                         DataType = CellValues.Date
+                    });
+                row.AppendChild(
+                    new Cell
+                    {
+                        CellValue = new CellValue(item.TipoTransacao.Descricao),
+                        DataType = CellValues.String
                     });
                 row.AppendChild(
                     new Cell

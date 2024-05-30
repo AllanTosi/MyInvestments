@@ -21,4 +21,6 @@ public class UpdateOperacaoDto
     //Adiciona referencias
     [Required]
     public Guid AtivoId { get; set; }
+    [Required]
+    public Guid TipoTransacaoId { get; set; }
 }

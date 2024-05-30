@@ -37,6 +37,7 @@
     "SearchOperacao": "Search Operations by Date",
     "AtivoTicker": "Ticker Asset",
     "OperationDate": "Operation Date",
+    "TipoTransacao": "Transaction Type",
     "Quantity": "Quantity",
     "Price": "Price",
     "EmolumentValue": "Emolument Value",
@@ -58,6 +59,7 @@
     "Description": "Description",
     "Name": "Name",
     "Search": "Search",
+    "Clean": "Clean",
 
     "successMessage": "Your changes have been successfully saved!",
     "AddSuccessMessage": "Item added successfully.",

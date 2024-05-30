@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyInvestments.TipoTransacoes;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -15,6 +16,7 @@ public interface IOperacaoAppService : IApplicationService
     Task<List<OperacaoDto>> GetListByDataAsync(DateTime dataOperacao);
 
     Task<ListResultDto<AtivoLookupDto>> GetAtivoLookupAsync();
+    Task<ListResultDto<TipoTransacaoLookupDto>> GetTipoTransacaoLookupAsync();
 
     Task<OperacaoDto> CreateAsync(CreateOperacaoDto input);
 

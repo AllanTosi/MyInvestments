@@ -11,6 +11,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Components.Web.LeptonXLiteTheme.Themes.LeptonXLite;
 using AutoMapper.Internal.Mappers;
 using Microsoft.JSInterop;
+using MyInvestments.TipoTransacoes;
 
 namespace MyInvestments.Blazor.Pages;
 
@@ -43,6 +44,7 @@ public partial class Operacoes
     private DateTime SearchOperacao { get; set; } = DateTime.Today;
 
     IReadOnlyList<AtivoLookupDto> ativoList = Array.Empty<AtivoLookupDto>();
+    IReadOnlyList<TipoTransacaoLookupDto> tipoTransacaoList = Array.Empty<TipoTransacaoLookupDto>();
 
     public Operacoes()
     {
@@ -55,6 +57,7 @@ public partial class Operacoes
         await SetPermissionsAsync();
         await GetOperacoesAsync();
         ativoList = (await OperacaoAppService.GetAtivoLookupAsync()).Items;
+        tipoTransacaoList = (await OperacaoAppService.GetTipoTransacaoLookupAsync()).Items; 
     }
 
     private async Task SetPermissionsAsync()
@@ -104,6 +107,7 @@ public partial class Operacoes
         NewOperacao = new CreateOperacaoDto();
         CreateOperacaoModal.Show();
         NewOperacao.AtivoId = ativoList.First().Id;
+        NewOperacao.TipoTransacaoId = tipoTransacaoList.First().Id;
     }
 
     private void CloseCreateOperacaoModal()

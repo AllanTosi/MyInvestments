@@ -1,4 +1,5 @@
 ﻿using MyInvestments.Ativos;
+using MyInvestments.TipoTransacoes;
 using System;
 using Volo.Abp.Application.Dtos;
 
@@ -15,4 +16,6 @@ public class OperacaoDto : EntityDto<Guid>
 
     //Adicionando relacionamento
     public AtivoDto Ativo { get; set; }
+    public TipoTransacaoDto TipoTransacao { get; set; }
+
 }

@@ -37,6 +37,7 @@
     "AtivoTicker": "Ticker Ativo",
     "SearchOperacao": "Buscar Operações por Data",
     "OperationDate": "Data da Operação",
+    "TipoTransacao": "Tipo de Transação",
     "Quantity": "Quantidade",
     "Price": "Preço",
     "EmolumentValue": "Valor do Emolumento",
@@ -58,6 +59,7 @@
     "Description": "Descrição",
     "Name": "Nome",
     "Search": "Buscar",
+    "Clean": "Limpar",
 
     "successMessage": "Suas alterações foram salvas com sucesso!",
     "AddSuccessMessage": "Item adicionado com sucesso.",

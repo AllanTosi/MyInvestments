@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 using MyInvestments.Ativos;
+using MyInvestments.TipoTransacoes;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -20,6 +21,9 @@ public class Operacao : FullAuditedAggregateRoot<Guid>
     public Guid AtivoId { get; set; }
     public Ativo Ativo { get; set; }
 
+    public Guid TipoTransacaoId {  get; set; }
+    public TipoTransacao TipoTransacao { get; set; }
+
     private Operacao()
     {
         /* This constructor is for deserialization / ORM purpose */
@@ -27,6 +31,7 @@ public class Operacao : FullAuditedAggregateRoot<Guid>
 
     internal Operacao(
         Guid ativoId,
+        Guid tipoTransacaoId,
         Guid id,
         DateTime dataOperacao,
         int quantidade,
@@ -37,6 +42,7 @@ public class Operacao : FullAuditedAggregateRoot<Guid>
         : base(id)
     {
         AtivoId = ativoId;
+        TipoTransacaoId = tipoTransacaoId;
         DataOperacao = dataOperacao;
         Quantidade = quantidade;
         Preco = preco;

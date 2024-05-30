@@ -8,6 +8,8 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using MyInvestments.Ativos;
 using MyInvestments.Setores;
+using MyInvestments.TipoTransacoes;
+using Volo.Abp.ObjectMapping;
 
 namespace MyInvestments.Operacoes;
 
@@ -18,16 +20,19 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
     private readonly OperacaoManager _operacaoManager;
 
     private readonly IAtivoRepository _ativoRepository;
+    private readonly ITipoTransacaoRepository _tipoTransacaoRepository;
 
     public OperacaoAppService(
         IOperacaoRepository operacaoRepository,
         OperacaoManager operacaoManager,
-        IAtivoRepository ativoRepository
+        IAtivoRepository ativoRepository,
+        ITipoTransacaoRepository tipoTransacaoRepository
         )
     {
         _operacaoRepository = operacaoRepository;
         _operacaoManager = operacaoManager;
         _ativoRepository = ativoRepository;
+        _tipoTransacaoRepository = tipoTransacaoRepository;
     }
 
     //...SERVICE METHODS WILL COME HERE...
@@ -77,6 +82,7 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
         {
             var operacaoDto = ObjectMapper.Map<Operacao, OperacaoDto>(operacao);
             operacaoDto.Ativo = ObjectMapper.Map<Ativo, AtivoDto>(operacao.Ativo);
+            operacaoDto.TipoTransacao = ObjectMapper.Map<TipoTransacao, TipoTransacaoDto>(operacao.TipoTransacao);
             listOperacaoDto.Add(operacaoDto);
         }
 
@@ -91,6 +97,7 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
     {
         var operacao = await _operacaoManager.CreateAsync(
             input.AtivoId,
+            input.TipoTransacaoId,
             input.DataOperacao,
             input.Quantidade,
             input.Preco,
@@ -100,6 +107,8 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
         );
 
         operacao.Ativo = await _ativoRepository.GetAsync(input.AtivoId);
+
+        operacao.TipoTransacao = await _tipoTransacaoRepository.GetAsync(input.TipoTransacaoId);
 
         await _operacaoRepository.InsertAsync(operacao);
 
@@ -119,6 +128,7 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
         operacao.ValorCorretagem = input.ValorCorretagem;
 
         operacao.AtivoId = input.AtivoId;
+        operacao.TipoTransacaoId = input.TipoTransacaoId;
 
         await _operacaoRepository.UpdateAsync(operacao);
     }
@@ -164,5 +174,14 @@ public class OperacaoAppService : MyInvestmentsAppService, IOperacaoAppService
     {
         var operacoes = await _operacaoRepository.GetListWithRelationshipAsync();
         return ObjectMapper.Map<List<Operacao>, List<OperacaoDto>>(operacoes);
+    }
+    [Authorize(MyInvestmentsPermissions.Operacoes.Default)]
+    public async Task<ListResultDto<TipoTransacaoLookupDto>> GetTipoTransacaoLookupAsync()
+    {
+        var tipoTransacao = await _tipoTransacaoRepository.GetListAsync();
+
+        return new ListResultDto<TipoTransacaoLookupDto>(
+            ObjectMapper.Map<List<TipoTransacao>, List<TipoTransacaoLookupDto>>(tipoTransacao)
+        );
     }
 }

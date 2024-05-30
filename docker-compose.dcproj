@@ -15,6 +15,7 @@
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
-	<None Include="src\MyInvestments.Blazor\Pages\Input.razor" />
+    <None Include="src\MyInvestments.Blazor\Pages\CurrencyInput.razor" />
+    <None Include="src\MyInvestments.Blazor\Pages\Input.razor" />
   </ItemGroup>
 </Project>
